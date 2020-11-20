@@ -1,3 +1,48 @@
+*{
+	box-sizing: border-box;
+}
+
 body{
-	background-color: lightblue;
+	background-color: black;
+	display: flex;
+	flex-direction: column;
+}
+
+
+header{
+	display: flex;
+	color: white;
+	justify-content: center;
+	margin-bottom: -30px;
+}
+
+
+.grid-wrapper {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.grid {
+	align-items: center;
+	box-shadow: 0 0  20px 0 rgba(245, 245, 245, 0.3) ;
+	display: flex;
+	flex-wrap: wrap;
+	height: 100%;
+	justify-content: center;
+	height: 600px;
+	width: 600px;
+	border: 1px solid white;
+}
+
+.grid div{
+	border: 1px solid white;
+	flex-grow: 1;
+	height: 10%;
+	width: 10%;
+}
+
+.grid div.harry{
+	background-image: url(../image/characters/harry_black.gif;
 }
