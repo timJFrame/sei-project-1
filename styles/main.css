@@ -35,14 +35,16 @@ header{
 
 .grid div{
 	color: white;
-	 /* border: 1px solid rgba(255,255,255, 0.3);  */
+	 border: 1px solid rgba(255,255,255, 0.3); 
 	flex-grow: 1;
 	height: 7.14%;
 	width: 7.14%;
 }
 
-.grid div.harry{
-	background-image: url(../image/characters/harry_black.gif);
+.harry{
+	background-image: url('../images/characters/harrry.gif');
+	background-repeat: none;
+	background-size: contain;
 }
 
 .top-border{
