@@ -10,24 +10,30 @@ function init (){
   const width = 14
   const gridCellCount = width * width
   let harryPosition = 180
-	const harryClass = 'harry'
+  const harryClass = 'harry'
 	
+  //*Aray holds the position of all block positions harry cannot move through when going down
+  const downPositionsToBlock = [168,169,170,171,172,173,174,175,176,177,178,179,180,181,149,150,151,194,128,114,115,116,104,105,121,122,123,80,81,16,17,18,20,21,23,24,25,72,73,64,61]
 
-	const downPositionsToBlock = [168,169,170,171,172,173,174,175,176,177,178,179,180,181,149,150,151,194,128,114,115,116,104,105,121,122,123,80,81,16,17,18,20,21,23,24,25,72,73,64,61]
+  //*Aray holds the position of all block positions harry cannot move through when going up
+  const upPositionsToBlock = [15,16,17,18,19,20,21,22,23,24,25,26,27,72,73,74,103,76,77,106,79,80,81,122,123,170,171,172,174,175,177,178,179,114,115]
 
-	const upPositionsToBlock = [15,16,17,18,19,20,21,22,23,24,25,26,27,72,73,74,103,76,77,106,79,80,81,122,123,170,171,172,174,175,177,178,179,114,115]
+  //*Aray holds the position of all block positions harry cannot move through when going left
+  const leftPositionsToAvoid = [15,29,43,57,71,85,99,113,127,141,155,169,33,47,61,88,102,131,145,159,36,50,64,79,93,120,134,148,162,40,54,68,96,110,138,152,166, 76,90]
 
-	const leftPositionsToAvoid = [15,29,43,57,71,85,99,113,127,141,155,169,33,47,61,88,102,131,145,159,36,50,64,79,93,120,134,148,162,40,54,68,96,110,138,152,166, 76,90]
+  //*Aray holds the position of all block positions harry cannot move through when going right
+  const rightPositionsToAvoid = [29,43,57,85,99,127,141,155,74,88,77,91,117,131,145,159,36,50,64,93,107,134,148,162,26,40,54,68,82,96,110,124,138,152,166,180,33,47,61]
 
-	const rightPositionsToAvoid = [29,43,57,85,99,127,141,155,74,88,77,91,117,131,145,159,36,50,64,93,107,134,148,162,26,40,54,68,82,96,110,124,138,152,166,180,33,47,61]
 
-
+//!-------------------FUNCTIONS--------------------------------------
 
   //*Board Functions
+	
+  //*Creates grid for game
   function createGameGrid(){
     for (let i = 0; i < gridCellCount; i++){
       const cell = document.createElement('div')
-      cell.innerHTML = i
+      // cell.innerHTML = i
       grid.appendChild(cell)
       cells.push(cell)
     }
@@ -36,7 +42,7 @@ function init (){
   createGameGrid()
 
 
-
+  //*Creates border for game
   function createGameBorder(){
     for (let i = 1; i < 13; i++){
       cells[i].classList.add('top-border')
@@ -62,6 +68,7 @@ function init (){
 
   createGameBorder()
 
+  //*Creates Blocks for Game
   function createGameBlocks(){
 
     function createBottomLeftCorner(index){
@@ -152,7 +159,6 @@ function init (){
     createBottomLeftCorner(156)
     createBottomRightCorner(158)
 		
-
     //*Bottom Right Block
     createTopBlock(136)
     createTopLeftCorner(135)
@@ -184,40 +190,81 @@ function init (){
   //*Removes Harry
   function removeHarry(){
     cells[harryPosition].classList.remove(harryClass)
+	}
+	
+  //*Flips harry to face right
+  function flipHarry(){
+    cells[harryPosition].classList.add('flip-harry')
   }
 
+  //*Removes flips harry class
+  function removeFlipHarry(){
+    cells[harryPosition].classList.remove('flip-harry')
+  }
+	
+  //*Rotates harry 90 degrees
+  function rotateHarryUp(){
+    cells[harryPosition].classList.add('rotate-harry-up')
+  }
+
+  //*Removes 90 degree rotation
+  function removeRotateHarryUp(){
+    cells[harryPosition].classList.remove('rotate-harry-up')
+  }
+
+  //*Rotates harry -90 degrees
+  function rotateHarryDown(){
+    cells[harryPosition].classList.add('rotate-harry-down')
+  }
+
+  //* Removes -90 degree rotation
+  function removeRotateHarryDown(){
+    cells[harryPosition].classList.remove('rotate-harry-down')
+  }
+
+  //*Handles harrys movement when a player uses an arrow key
   function handleKeyUp(e){
     removeHarry()
+    removeFlipHarry()
+    removeRotateHarryUp()
+    removeRotateHarryDown()
+
     const horizontalPosition = harryPosition % width
     const verticalPosition = Math.floor(harryPosition / width)
 
-		function avoidBlock(blockPosition){
-			return blockPosition !== harryPosition
-		}
+    //*Tests if harry position is the same a gameboard block
+    function avoidBlock(blockPosition){
+      return blockPosition !== harryPosition
+    }
 		
     switch (e.keyCode){
       case 39: //Move Right
-        if (horizontalPosition < width - 1 && rightPositionsToAvoid.every(avoidBlock)) harryPosition++
+        if (horizontalPosition < width - 1 && rightPositionsToAvoid.every(avoidBlock)) 
+          harryPosition++
+        flipHarry()
         break
-      case 37://Move Left
-        if (horizontalPosition > 0 && leftPositionsToAvoid.every(avoidBlock)) harryPosition--
+      case 37://*Move Left
+        if (horizontalPosition > 0 && leftPositionsToAvoid.every(avoidBlock)) 
+          harryPosition--
         break
-      case 38://Move Up
+      case 38://*Move Up
         if (verticalPosition > 0 && upPositionsToBlock.every(avoidBlock)) harryPosition -= width
+        rotateHarryUp()
         break
-      case 40://Move down
-				if (verticalPosition < width - 1 && downPositionsToBlock.every(avoidBlock) ) harryPosition += width
+      case 40://*Move down
+        if (verticalPosition < width - 1 && downPositionsToBlock.every(avoidBlock)) 
+          harryPosition += width
+        rotateHarryDown()
         break
       default:
         console.log('invaild key')
     } 
-		addHarry()
-		// console.log(harryPosition)
-  
-}
-console.log(harryPosition)
+    addHarry()
+    
+  }
 
 
+//!-------------------EVENT HANDLER--------------------------------------
 
   document.addEventListener('keyup', handleKeyUp)
 

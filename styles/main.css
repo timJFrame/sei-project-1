@@ -34,8 +34,8 @@ header{
 }
 
 .grid div{
-	color: white;
-	 border: 1px solid rgba(255,255,255, 0.3); 
+	/* color: white;
+	 border: 1px solid rgba(255,255,255, 0.3);  */
 	flex-grow: 1;
 	height: 7.14%;
 	width: 7.14%;
@@ -45,6 +45,20 @@ header{
 	background-image: url('../images/characters/harrry.gif');
 	background-repeat: none;
 	background-size: contain;
+}
+.flip-harry{
+	background-image: url('../images/characters/flipped-harrry.gif');
+	background-repeat: none;
+	background-size: contain;
+}
+
+.rotate-harry-up{
+	transform: rotate(90deg);
+	/* transition: ease-in; */
+}
+
+.rotate-harry-down{
+	transform: rotate(-90deg)
 }
 
 .top-border{
@@ -143,3 +157,6 @@ header{
 	background-repeat: none;
 	background-size: cover;
 }
+
+
+
