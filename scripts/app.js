@@ -8,16 +8,18 @@ function init (){
   //*Game variable
   const cells = []
   const width = 14
-	const gridCellCount = width * width
-	let blockPosition = []
+  const gridCellCount = width * width
+	const blockPosition = []
+	let harryPosition = 180
 
-	blockPosition.push(58,67,30,39,33,31,32,34,35,36,44,53,100,108,156,163,105,104,75,89, 86,128,78,129,136,157,164,142,149,144,151 )
+
+  blockPosition.push(58,67,30,39,33,31,32,34,35,36,44,53,100,108,156,163,105,104,75,89, 86,128,78,129,136,157,164,142,149,144,151 )
 
   //*Board Functions
   function createGameGrid(){
     for (let i = 0; i < gridCellCount; i++){
       const cell = document.createElement('div')
-      // cell.innerHTML = i
+      cell.innerHTML = i
       grid.appendChild(cell)
       cells.push(cell)
     }
@@ -27,101 +29,163 @@ function init (){
 
 
 
-function createGameBorder(){
-  for (let i = 1; i < 13; i++){
-		cells[i].classList.add('top-border')
-		blockPosition.push(i)
-  }
+  function createGameBorder(){
+    for (let i = 1; i < 13; i++){
+      cells[i].classList.add('top-border')
+      blockPosition.push(i)
+    }
 	
-	for (let i = 183; i < 195; i++){
-		cells[i].classList.add('bottom-border')
-		blockPosition.push(i)
-	}
+    for (let i = 183; i < 195; i++){
+      cells[i].classList.add('bottom-border')
+      blockPosition.push(i)
+    }
 
-	for(let i = 14; i < 182; i += 14){
-			cells[i].classList.add('left-side-border')
-			blockPosition.push(i)
-	}
+    for (let i = 14; i < 182; i += 14){
+      cells[i].classList.add('left-side-border')
+      blockPosition.push(i)
+    }
 
-	for(let i = 27; i < 195; i += 14){
-		cells[i].classList.add('right-side-border')
-			blockPosition.push(i)
-	}
+    for (let i = 27; i < 195; i += 14){
+      cells[i].classList.add('right-side-border')
+      blockPosition.push(i)
+    }
 
-	cells[0].classList.add('top-left-corner-border')
-	cells[13].classList.add('top-right-corner-border')
-	cells[182].classList.add('bottom-left-corner-border')
-	cells[195].classList.add('bottom-right-corner-border')
-}
+    cells[0].classList.add('top-left-corner-border')
+    cells[13].classList.add('top-right-corner-border')
+    cells[182].classList.add('bottom-left-corner-border')
+    cells[195].classList.add('bottom-right-corner-border')
+  }
 
-createGameBorder()
+  createGameBorder()
 
-function createGameBlocks(){
+  function createGameBlocks(){
 
- for(let i = 59; i < 67; i++){
-	cells[i].classList.add('block-bottom-side')
-	blockPosition.push(i)
- }
+    // for (let i = 59; i < 67; i++){
+    //   cells[i].classList.add('block-bottom-side')
+    //   blockPosition.push(i)
+    // }
 
- cells[58].classList.add('block-bottom-left-corner')
- cells[100].classList.add('block-bottom-left-corner')
- cells[108].classList.add('block-bottom-left-corner')
- cells[156].classList.add('block-bottom-left-corner')
- cells[163].classList.add('block-bottom-left-corner')
- cells[103].classList.add('block-bottom-left-corner')
- 
- cells[67].classList.add('block-bottom-right-corner')
- cells[101].classList.add('block-bottom-right-corner')
- cells[106].classList.add('block-bottom-right-corner')
- cells[109].classList.add('block-bottom-right-corner')
- cells[158].classList.add('block-bottom-right-corner')
- cells[165].classList.add('block-bottom-right-corner')
- 
- cells[30].classList.add('block-top-left-corner')
- cells[86].classList.add('block-top-left-corner')
- cells[94].classList.add('block-top-left-corner')
- cells[135].classList.add('block-top-left-corner')
- cells[128].classList.add('block-top-left-corner')
- cells[37].classList.add('block-top-left-corner')
+    function createBottomLeftCorner(index){
+      cells[index].classList.add('block-bottom-left-corner')
+    }
 
- cells[39].classList.add('block-top-right-corner')
- cells[87].classList.add('block-top-right-corner')
- cells[95].classList.add('block-top-right-corner')
- cells[130].classList.add('block-top-right-corner')
- cells[137].classList.add('block-top-right-corner')
- cells[32].classList.add('block-top-right-corner')
+    function createBottomRightCorner(index){
+      cells[index].classList.add('block-bottom-right-corner')
+    }
 
- cells[31].classList.add('block-top-side')
- cells[129].classList.add('block-top-side')
- cells[136].classList.add('block-top-side')
- cells[38].classList.add('block-top-side')
+    function createTopLeftCorner(index){
+      cells[index].classList.add('block-top-left-corner')
+		}
+		
+		function createTopRightCorner(index){
+      cells[index].classList.add('block-top-right-corner')
+    }
 
- cells[34].classList.add('block-bottom-side')
- cells[35].classList.add('block-bottom-side')
- cells[36].classList.add('block-bottom-side')
- cells[33].classList.add('block-bottom-side')
- cells[105].classList.add('block-bottom-side')
- cells[104].classList.add('block-bottom-side')
- cells[157].classList.add('block-bottom-side')
- cells[164].classList.add('block-bottom-side')
+		function createTopBlock(index){
+			cells[index].classList.add('block-top-side')
+		}
 
- cells[44].classList.add('block-left-side')
- cells[89].classList.add('block-left-side')
- cells[75].classList.add('block-left-side')
- cells[142].classList.add('block-left-side')
- cells[149].classList.add('block-left-side')
+		function createBottomBlock(index){
+			cells[index].classList.add('block-bottom-side')
+		}
 
- cells[53].classList.add('block-right-side')
- cells[78].classList.add('block-right-side')
- cells[144].classList.add('block-right-side')
- cells[151].classList.add('block-right-side')
-}
+		function createLeftBlock(index){
+			cells[index].classList.add('block-left-side')
+		}
 
-createGameBlocks()
+		function createRightBloc(index){
+			cells[index].classList.add('block-right-side')
+		}
+
+		//*Top left Block
+		createTopBlock(31)
+		createTopLeftCorner(30)
+		createTopRightCorner(32)
+		createBottomLeftCorner(58)
+		createBottomRightCorner(60)
+		createLeftBlock(44)
+		createRightBloc(46)
+		createBottomBlock(59)
+		createBottomRightCorner(67)
+
+		//*Top Right Block
+		createTopBlock(38)
+		createTopRightCorner(39)
+		createTopLeftCorner(37)
+		createRightBloc(53)
+		createLeftBlock(51)
+		createBottomBlock(66)
+		createBottomLeftCorner(65)
+
+			//*Center Block Top Block
+			createTopLeftCorner(34)
+			createTopRightCorner(35)
+			createLeftBlock(48)
+			createRightBloc(49)
+			createBottomLeftCorner(62)
+		createBottomRightCorner(63)
+
+	
+		createTopLeftCorner(75)
+		createTopRightCorner(78)
+		createBottomLeftCorner(89)
+		createBottomRightCorner(92)
+		
+		//*Middle Left Block
+		createTopLeftCorner(86)
+		createTopRightCorner(87)
+		createBottomLeftCorner(100)
+		createBottomRightCorner(101)
+
+		//*Middle Right Block
+		createTopLeftCorner(94)
+		createTopRightCorner(95)
+		createBottomLeftCorner(108)
+		createBottomRightCorner(109)
+
+		//*Bottom Left Block
+		createTopBlock(129)
+		createTopLeftCorner(128)
+		createTopRightCorner(130)
+		createLeftBlock(142)
+		createRightBloc(144)
+		createBottomBlock(157)
+		createBottomLeftCorner(156)
+		createBottomRightCorner(158)
+		
+
+		//*Bottom Right Block
+		createTopBlock(136)
+		createTopLeftCorner(135)
+		createTopRightCorner(137)
+		createLeftBlock(149)
+		createRightBloc(151)
+		createBottomBlock(164)
+		createBottomLeftCorner(163)
+		createBottomRightCorner(165)
+	
+	//* Center Bottom Block
+	createTopLeftCorner(118)
+	createTopRightCorner(119)
+	createLeftBlock(132)
+	createRightBloc(133)
+	createLeftBlock(146)
+	createRightBloc(147)
+	createBottomLeftCorner(160)
+		createBottomRightCorner(161)
+
+  }
+  createGameBlocks()
 
 
 
-	console.log(blockPosition)
+
+
+
+
+
+
+  console.log(blockPosition)
 	
 
 

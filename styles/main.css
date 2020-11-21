@@ -17,7 +17,7 @@ header{
 
 
 .grid-wrapper {
-	height: 70vh;
+	height: 100vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -25,19 +25,17 @@ header{
 
 .grid {
 	align-items: center;
-	/* box-shadow: 0 0  20px 0 rgba(245, 245, 245, 0.3) ; */
 	display: flex;
 	flex-wrap: wrap;
 	height: 100%;
 	justify-content: center;
 	height: 600px;
 	width: 600px;
-	/* border: 1px solid white; */
 }
 
 .grid div{
 	color: white;
-	 border: 1px solid white; 
+	 /* border: 1px solid rgba(255,255,255, 0.3);  */
 	flex-grow: 1;
 	height: 7.14%;
 	width: 7.14%;
