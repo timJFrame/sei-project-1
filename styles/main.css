@@ -34,8 +34,8 @@ header{
 }
 
 .grid div{
-	/* color: white;
-	 border: 1px solid rgba(255,255,255, 0.3);  */
+	color: white;
+	 border: 1px solid rgba(255,255,255, 0.3); 
 	flex-grow: 1;
 	height: 7.14%;
 	width: 7.14%;
@@ -59,6 +59,30 @@ header{
 
 .rotate-harry-down{
 	transform: rotate(-90deg)
+}
+
+.red-voldemort{
+	background-image: url('../images/characters/red_voldemort.png');
+	background-repeat: none;
+	background-size: contain;
+}
+
+.purple-voldemort{
+	background-image: url('../images/characters/purple_voldemort.png');
+	background-repeat: none;
+	background-size: contain;
+}
+
+.blue-voldemort{
+	background-image: url('../images/characters/blue_voldemort.png');
+	background-repeat: none;
+	background-size: contain;
+}
+
+.yellow-voldemort{
+	background-image: url('../images/characters/yellow_voldermort.png');
+	background-repeat: none;
+	background-size: contain;
 }
 
 .top-border{

@@ -10,7 +10,17 @@ function init (){
   const width = 14
   const gridCellCount = width * width
   let harryPosition = 180
-  const harryClass = 'harry'
+	const harryClass = 'harry'
+	let redVoldemortPosition = 76
+	let purpleVoldemortPosition = 77
+	let blueVoldemortPosition = 90
+	let yellowVoldemortPosition = 91
+	const redVoldemortClass = 'red-voldemort'
+	const purpleVoldemortClass = 'purple-voldemort'
+	const blueVoldemortClass = 'blue-voldemort'
+	const yellowVoldemortClass = 'yellow-voldemort'
+
+
 	
   //*Aray holds the position of all block positions harry cannot move through when going down
   const downPositionsToBlock = [168,169,170,171,172,173,174,175,176,177,178,179,180,181,149,150,151,194,128,114,115,116,104,105,121,122,123,80,81,16,17,18,20,21,23,24,25,72,73,64,61]
@@ -33,7 +43,7 @@ function init (){
   function createGameGrid(){
     for (let i = 0; i < gridCellCount; i++){
       const cell = document.createElement('div')
-      // cell.innerHTML = i
+      cell.innerHTML = i
       grid.appendChild(cell)
       cells.push(cell)
     }
@@ -241,29 +251,57 @@ function init (){
       case 39: //Move Right
         if (horizontalPosition < width - 1 && rightPositionsToAvoid.every(avoidBlock)) 
           harryPosition++
-        flipHarry()
+				flipHarry()
+				checkOneDivRaduis(yellowVoldemortPosition)
         break
       case 37://*Move Left
         if (horizontalPosition > 0 && leftPositionsToAvoid.every(avoidBlock)) 
-          harryPosition--
+					harryPosition--
+					addHarry()
+					checkOneDivRaduis(yellowVoldemortPosition)
         break
       case 38://*Move Up
         if (verticalPosition > 0 && upPositionsToBlock.every(avoidBlock)) harryPosition -= width
-        rotateHarryUp()
+				rotateHarryUp()
+				checkOneDivRaduis(yellowVoldemortPosition)
         break
       case 40://*Move down
         if (verticalPosition < width - 1 && downPositionsToBlock.every(avoidBlock)) 
           harryPosition += width
-        rotateHarryDown()
+				rotateHarryDown()
+				checkOneDivRaduis(yellowVoldemortPosition)
         break
       default:
         console.log('invaild key')
     } 
     addHarry()
-    
   }
 
+	//*Add Voldemort ghost to page
+	function addVoldemort(voldemortPosition, voldemortClass){
+		cells[voldemortPosition].classList.add(voldemortClass)
+	}
+//*Removes voldermort from pages
+	function addVoldemort(voldemortPosition, voldemortClass){
+		cells[voldemortPosition].classList.add(voldemortClass)
+	}
 
+	addVoldemort(redVoldemortPosition, redVoldemortClass)
+	addVoldemort(purpleVoldemortPosition, purpleVoldemortClass)
+	addVoldemort(blueVoldemortPosition, blueVoldemortClass)
+	addVoldemort(yellowVoldemortPosition, yellowVoldemortClass)
+
+function checkOneDivRaduis(voldemortPosition){
+	if(cells[yellowVoldemortPosition + 1].className === 'harry' ||
+	cells[yellowVoldemortPosition - 1].className === 'harry' ||
+	cells[yellowVoldemortPosition + 14].className === 'flip-harry' ||
+	cells[yellowVoldemortPosition + 14].className === 'harry'){
+		console.log('found harry')
+	}
+
+	console.dir(cells[yellowVoldemortPosition + 14].className)
+	
+}
 //!-------------------EVENT HANDLER--------------------------------------
 
   document.addEventListener('keyup', handleKeyUp)
