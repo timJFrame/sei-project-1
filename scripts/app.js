@@ -10,15 +10,19 @@ function init (){
   const width = 14
   const gridCellCount = width * width
   let harryPosition = 180
-	const harryClass = 'harry'
-	let redVoldemortPosition = 76
-	let purpleVoldemortPosition = 77
-	let blueVoldemortPosition = 90
-	let yellowVoldemortPosition = 91
-	const redVoldemortClass = 'red-voldemort'
-	const purpleVoldemortClass = 'purple-voldemort'
-	const blueVoldemortClass = 'blue-voldemort'
-	const yellowVoldemortClass = 'yellow-voldemort'
+  const harryClass = 'harry'
+  let redVoldemortPosition = 76
+  let purpleVoldemortPosition = 77
+  let blueVoldemortPosition = 90
+  let yellowVoldemortPosition = 26
+  const redVoldemortClass = 'red-voldemort'
+  const purpleVoldemortClass = 'purple-voldemort'
+  const blueVoldemortClass = 'blue-voldemort'
+  const yellowVoldemortClass = 'yellow-voldemort'
+
+  const horizontalPosition = harryPosition % width
+  const verticalPosition = Math.floor(harryPosition / width)
+
 
 
 	
@@ -35,7 +39,7 @@ function init (){
   const rightPositionsToAvoid = [29,43,57,85,99,127,141,155,74,88,77,91,117,131,145,159,36,50,64,93,107,134,148,162,26,40,54,68,82,96,110,124,138,152,166,180,33,47,61]
 
 
-//!-------------------FUNCTIONS--------------------------------------
+  //!-------------------FUNCTIONS--------------------------------------
 
   //*Board Functions
 	
@@ -60,6 +64,7 @@ function init (){
 	
     for (let i = 183; i < 195; i++){
       cells[i].classList.add('bottom-border')
+
     }
 
     for (let i = 14; i < 182; i += 14){
@@ -200,7 +205,7 @@ function init (){
   //*Removes Harry
   function removeHarry(){
     cells[harryPosition].classList.remove(harryClass)
-	}
+  }
 	
   //*Flips harry to face right
   function flipHarry(){
@@ -238,6 +243,12 @@ function init (){
     removeFlipHarry()
     removeRotateHarryUp()
     removeRotateHarryDown()
+    removeYellowVoldemort()
+    addRedVoldemort()
+    addPurpleVoldemort()
+    addBlueVoldemort()
+    addYellowVoldemort()
+   
 
     const horizontalPosition = harryPosition % width
     const verticalPosition = Math.floor(harryPosition / width)
@@ -251,58 +262,585 @@ function init (){
       case 39: //Move Right
         if (horizontalPosition < width - 1 && rightPositionsToAvoid.every(avoidBlock)) 
           harryPosition++
-				flipHarry()
-				checkOneDivRaduis(yellowVoldemortPosition)
+        flipHarry()
+
+        
+        
+       
+        checkRightYellowVoldemort()
+        checkLeftYellowVolderMort()
+        checkUpYellowVolderMort()
+        checkDownYellowVoldemort()
+
+        checkRightRedVoldemort()
+        checkLeftRedVolderMort()
+        checkUpRedVolderMort()
+        checkDownRedVoldemort()
+
+        checkRightBlueVoldemort()
+        checkLeftBlueVolderMort()
+        checkUpBlueVolderMort()
+        checkDownBlueVoldemort()
+
+        checkRightPurpleVoldemort()
+        checkLeftPurpleVolderMort()
+        checkUpPurpleVolderMort()
+        checkDownPurpleVoldemort()
+       
         break
       case 37://*Move Left
         if (horizontalPosition > 0 && leftPositionsToAvoid.every(avoidBlock)) 
-					harryPosition--
-					addHarry()
-					checkOneDivRaduis(yellowVoldemortPosition)
+          harryPosition--
+        addHarry()
+
+        
+      
+        checkRightYellowVoldemort()
+        checkLeftYellowVolderMort()
+        checkUpYellowVolderMort()
+        checkDownYellowVoldemort()
+        
+        checkRightRedVoldemort()
+        checkLeftRedVolderMort()
+        checkUpRedVolderMort()
+        checkDownRedVoldemort()
+        
+        
+        checkRightBlueVoldemort()
+        checkLeftBlueVolderMort()
+        checkUpBlueVolderMort()
+        checkDownBlueVoldemort()
+        
+        checkRightPurpleVoldemort()
+        checkLeftPurpleVolderMort()
+        checkUpPurpleVolderMort()
+        checkDownPurpleVoldemort()
+       
+
         break
       case 38://*Move Up
         if (verticalPosition > 0 && upPositionsToBlock.every(avoidBlock)) harryPosition -= width
-				rotateHarryUp()
-				checkOneDivRaduis(yellowVoldemortPosition)
+        rotateHarryUp()
+
+        autoMoveYellowVolderMort()
+        
+        checkRightYellowVoldemort()
+        checkLeftYellowVolderMort()
+        checkUpYellowVolderMort()
+        checkDownYellowVoldemort()
+
+        checkRightRedVoldemort()
+        checkLeftRedVolderMort()
+        checkUpRedVolderMort()
+        checkDownRedVoldemort()
+        
+        checkRightBlueVoldemort()
+        checkLeftBlueVolderMort()
+        checkUpBlueVolderMort()
+        checkDownBlueVoldemort()
+
+        checkRightPurpleVoldemort()
+        checkLeftPurpleVolderMort()
+        checkUpPurpleVolderMort()
+        checkDownPurpleVoldemort()
+        
         break
       case 40://*Move down
         if (verticalPosition < width - 1 && downPositionsToBlock.every(avoidBlock)) 
           harryPosition += width
-				rotateHarryDown()
-				checkOneDivRaduis(yellowVoldemortPosition)
+        rotateHarryDown()
+
+        checkRightYellowVoldemort()
+        checkLeftYellowVolderMort()
+        checkUpYellowVolderMort()
+        checkDownYellowVoldemort()
+
+        checkRightRedVoldemort()
+        checkLeftRedVolderMort()
+        checkUpRedVolderMort()
+        checkDownRedVoldemort()
+        
+        checkRightBlueVoldemort()
+        checkLeftBlueVolderMort()
+        checkUpBlueVolderMort()
+        checkDownBlueVoldemort()
+
+        checkRightPurpleVoldemort()
+        checkLeftPurpleVolderMort()
+        checkUpPurpleVolderMort()
+        checkDownPurpleVoldemort()
+
         break
       default:
         console.log('invaild key')
     } 
+    
     addHarry()
   }
 
-	//*Add Voldemort ghost to page
-	function addVoldemort(voldemortPosition, voldemortClass){
-		cells[voldemortPosition].classList.add(voldemortClass)
-	}
-//*Removes voldermort from pages
-	function addVoldemort(voldemortPosition, voldemortClass){
-		cells[voldemortPosition].classList.add(voldemortClass)
-	}
+  //*Add Voldemort ghost to page
+  function addRedVoldemort(){
+    cells[redVoldemortPosition].classList.add(redVoldemortClass)
+  }
+  function addPurpleVoldemort(){
+    cells[purpleVoldemortPosition].classList.add(purpleVoldemortClass)
+  }
+  function addBlueVoldemort(){
+    cells[blueVoldemortPosition].classList.add(blueVoldemortClass)
+  }
+  function addYellowVoldemort(){
+    cells[yellowVoldemortPosition].classList.add(yellowVoldemortClass)
+  }
 
-	addVoldemort(redVoldemortPosition, redVoldemortClass)
-	addVoldemort(purpleVoldemortPosition, purpleVoldemortClass)
-	addVoldemort(blueVoldemortPosition, blueVoldemortClass)
-	addVoldemort(yellowVoldemortPosition, yellowVoldemortClass)
+  //*Removes voldermort from pages
+  function removeRedVoldemort(){
+    cells[redVoldemortPosition].classList.remove(redVoldemortClass)
+  }
+  function removePurpleVoldemort(){
+    cells[purpleVoldemortPosition].classList.remove(purpleVoldemortClass)
+  }
+  function removeBlueVoldemort(){
+    cells[blueVoldemortPosition].classList.remove(blueVoldemortClass)
+  }
+  function removeYellowVoldemort(){
+    cells[yellowVoldemortPosition].classList.remove(yellowVoldemortClass)
+  }
+ 
+ 
+  function avoidBlock(blockPosition, voldermortPosition){
+    return blockPosition !== voldermortPosition
+  }
 
-function checkOneDivRaduis(voldemortPosition){
-	if(cells[yellowVoldemortPosition + 1].className === 'harry' ||
-	cells[yellowVoldemortPosition - 1].className === 'harry' ||
-	cells[yellowVoldemortPosition + 14].className === 'flip-harry' ||
-	cells[yellowVoldemortPosition + 14].className === 'harry'){
-		console.log('found harry')
-	}
+  
 
-	console.dir(cells[yellowVoldemortPosition + 14].className)
-	
+  //*Yellow Voldermort checks 1 and two divs right for harry
+ function  checkRightYellowVoldemort(){
+  if (cells[yellowVoldemortPosition + 1].className === 'harry' ||
+  cells[yellowVoldemortPosition + 1].className === 'flip-harry' ||
+  cells[yellowVoldemortPosition + 1].className === 'rotate-harry-up' ||
+  cells[yellowVoldemortPosition + 1].className === 'rotate-harry-down'){
+   //*Move to the Voldermort right
+   if (horizontalPosition < width - 1 && rightPositionsToAvoid.every(avoidBlock,yellowVoldemortPosition)){
+    removeYellowVoldemort()
+    yellowVoldemortPosition ++
+    addYellowVoldemort()
+    } 
+    }if (cells[yellowVoldemortPosition + 2].className === 'harry' ||
+    cells[yellowVoldemortPosition + 2].className === 'flip-harry' ||
+    cells[yellowVoldemortPosition+ + 2].className === 'rotate-harry-up' ||
+    cells[yellowVoldemortPosition+ 2].className === 'rotate-harry-down'){
+     //*Move to the Voldermort right
+     if (horizontalPosition < width - 1 && rightPositionsToAvoid.every(avoidBlock,yellowVoldemortPosition)){
+    removeYellowVoldemort()
+      yellowVoldemortPosition++
+      addYellowVoldemort()
+      } 
+      }
+  }
+
+// //* Yellow Voldemort Checks one and two divs left for harry
+function  checkLeftYellowVolderMort(){
+  if (cells[yellowVoldemortPosition -1].className === 'harry' ||
+cells[yellowVoldemortPosition - 1].className === 'flip-harry' ||
+cells[yellowVoldemortPosition - 1].className === 'rotate-harry-up' ||
+cells[yellowVoldemortPosition - 1].className === 'rotate-harry-down'){
+  //*Move to Right
+  if (horizontalPosition > 0 && leftPositionsToAvoid.every(avoidBlock, yellowVoldemortPosition)){
+    removeYellowVoldemort()
+    yellowVoldemortPosition--
+    addYellowVoldemort()
+    
+  } 
+  }else if (cells[yellowVoldemortPosition -2].className === 'harry' ||
+  cells[yellowVoldemortPosition - 2].className === 'flip-harry' ||
+  cells[yellowVoldemortPosition - 2].className === 'rotate-harry-up' ||
+  cells[yellowVoldemortPosition - 2].className === 'rotate-harry-down'){
+    //*Move to Right
+    if (horizontalPosition > 0 && leftPositionsToAvoid.every(avoidBlock, yellowVoldemortPosition)){
+      removeYellowVoldemort()
+      yellowVoldemortPosition--
+      addYellowVoldemort()
+    } 
+    }
 }
-//!-------------------EVENT HANDLER--------------------------------------
+ 
+  //*Yellow Voldemort checks 1 and two divs up for harry
+ function checkUpYellowVolderMort(){
+    
+    if (cells[yellowVoldemortPosition + width].className === 'harry' ||
+    cells[yellowVoldemortPosition - width].className === 'flip-harry' ||
+    cells[yellowVoldemortPosition - width].className === 'rotate-harry-up' ||
+    cells[yellowVoldemortPosition - width].className === 'rotate-harry-down'){
+    
+  if (verticalPosition < 0 && upPositionsToBlock.every(avoidBlock,yellowVoldemortPosition)){
+    
+    removeYellowVoldemort()
+    yellowVoldemortPosition -= width
+    addYellowVoldemort()
+  } 
+  } else if (cells[yellowVoldemortPosition - 14].className === 'rotate-harry-down' || cells[yellowVoldemortPosition - 14].className === 'rotate-harry-up'){
+    if (verticalPosition < 0 && upPositionsToBlock.every(avoidBlock,yellowVoldemortPosition)){
+      
+      removeYellowVoldemort()
+      yellowVoldemortPosition -= width
+      addYellowVoldemort()
+    } 
+    }
+}
+  
+//*Yellow Voldemort checks two divs down for harry
+  function checkDownYellowVoldemort(){
+    console.dir(cells[yellowVoldemortPosition + 14])
+    if (cells[yellowVoldemortPosition + width].className === 'harry' ||
+	cells[yellowVoldemortPosition + width].className === 'flip-harry' ||
+	cells[yellowVoldemortPosition + width].className === 'rotate-harry-up' ||
+	cells[yellowVoldemortPosition + width].className === 'rotate-harry-down'){
+    if (verticalPosition < width - 1 && downPositionsToBlock.every(avoidBlock, yellowVoldemortPosition)){
+      console.log(verticalPosition)
+      removeYellowVoldemort()
+      yellowVoldemortPosition += width
+      addYellowVoldemort()
+    } 
+    } if (cells[yellowVoldemortPosition + width + width].className === 'harry' ||
+    cells[yellowVoldemortPosition + width + width].className === 'flip-harry' ||
+    cells[yellowVoldemortPosition + width + width].className === 'rotate-harry-up' ||
+    cells[yellowVoldemortPosition + width + width].className === 'rotate-harry-down'){
+      if (verticalPosition < width - 1 && downPositionsToBlock.every(avoidBlock, yellowVoldemortPosition)){
+        removeYellowVoldemort()
+        yellowVoldemortPosition += width
+        addYellowVoldemort()
+      } 
+      }
+  }
+
+  //*Red Voldermort checks 1 and two divs right for harry
+ function  checkRightRedVoldemort(){
+  if (cells[redVoldemortPosition + 1].className === 'harry' ||
+  cells[redVoldemortPosition + 1].className === 'flip-harry' ||
+  cells[redVoldemortPosition + 1].className === 'rotate-harry-up' ||
+  cells[redVoldemortPosition + 1].className === 'rotate-harry-down'){
+   //*Move to the Voldermort right
+   if (horizontalPosition < width - 1 && rightPositionsToAvoid.every(avoidBlock,redVoldemortPosition)){
+    removeRedVoldemort()
+    redVoldemortPosition ++
+    addRedVoldemort()
+    } 
+    }if (cells[redVoldemortPosition + 2].className === 'harry' ||
+    cells[redVoldemortPosition + 2].className === 'flip-harry' ||
+    cells[redVoldemortPosition+ + 2].className === 'rotate-harry-up' ||
+    cells[redVoldemortPosition+ 2].className === 'rotate-harry-down'){
+     //*Move to the Voldermort right
+     if (horizontalPosition < width - 1 && rightPositionsToAvoid.every(avoidBlock,redVoldemortPosition)){
+    removeRedVoldemort()
+      redVoldemortPosition++
+      addYellowVoldemort()
+      } 
+      }
+  }
+
+// //* Red Voldemort Checks one and two divs left for harry
+function  checkLeftRedVolderMort(){
+  if (cells[redVoldemortPosition -1].className === 'harry' ||
+cells[redVoldemortPosition - 1].className === 'flip-harry' ||
+cells[redVoldemortPosition - 1].className === 'rotate-harry-up' ||
+cells[redVoldemortPosition - 1].className === 'rotate-harry-down'){
+  //*Move to Right
+  if (horizontalPosition > 0 && leftPositionsToAvoid.every(avoidBlock, redVoldemortPosition)){
+    removeRedVoldemort()
+    redVoldemortPosition--
+    addRedVoldemort()
+    
+  } 
+  }else if (cells[redVoldemortPosition -2].className === 'harry' ||
+  cells[redVoldemortPosition - 2].className === 'flip-harry' ||
+  cells[redVoldemortPosition - 2].className === 'rotate-harry-up' ||
+  cells[redVoldemortPosition - 2].className === 'rotate-harry-down'){
+    //*Move to Right
+    if (horizontalPosition > 0 && leftPositionsToAvoid.every(avoidBlock, redVoldemortPosition)){
+      removeRedVoldemort()
+      redVoldemortPosition--
+      addRedVoldemort()
+    } 
+    }
+}
+ 
+  //*Red Voldemort checks 1 and two divs up for harry
+ function checkUpRedVolderMort(){
+   
+  if (cells[redVoldemortPosition - 14].className === 'rotate-harry-down' || cells[redVoldemortPosition - 14].className === 'rotate-harry-up'){
+    console.log('yes')
+    if (verticalPosition < 0 && upPositionsToBlock.every(avoidBlock,redVoldemortPosition)){
+    console.log('yup')
+    removeRedVoldemort()
+    redVoldemortPosition -= width
+    addRedVoldemort()
+  } 
+  } else if (cells[yellowVoldemortPosition - 14].className === 'rotate-harry-down' || cells[redVoldemortPosition - 14].className === 'rotate-harry-up'){
+    if (verticalPosition < 0 && upPositionsToBlock.every(avoidBlock,redVoldemortPosition)){
+      
+      removeRedVoldemort()
+      redVoldemortPosition -= width
+      addRedVoldemort()
+    } 
+    }
+}
+  
+//*Red Voldemort checks two divs down for harry
+  function checkDownRedVoldemort(){
+    if (cells[redVoldemortPosition + width].className === 'harry' ||
+	cells[redVoldemortPosition + width].className === 'flip-harry' ||
+	cells[redVoldemortPosition + width].className === 'rotate-harry-up' ||
+	cells[redVoldemortPosition + width].className === 'rotate-harry-down'){
+    if (verticalPosition < width - 1 && downPositionsToBlock.every(avoidBlock, redVoldemortPosition)){
+      console.log(verticalPosition)
+      removeRedVoldemort()
+      redVoldemortPosition += width
+      addRedVoldemort()
+    } 
+    } if (cells[redVoldemortPosition + width + width].className === 'harry' ||
+    cells[redVoldemortPosition + width + width].className === 'flip-harry' ||
+    cells[redVoldemortPosition + width + width].className === 'rotate-harry-up' ||
+    cells[redVoldemortPosition + width + width].className === 'rotate-harry-down'){
+      if (verticalPosition < width - 1 && downPositionsToBlock.every(avoidBlock, redVoldemortPosition)){
+        removeRedVoldemort()
+        redVoldemortPosition += width
+        addRedVoldemort()
+      } 
+      }
+  }
+
+  //* Blue Voldermort checks 1 and two divs right for harry
+ function  checkRightBlueVoldemort(){
+  if (cells[blueVoldemortPosition + 1].className === 'harry' ||
+  cells[blueVoldemortPosition + 1].className === 'flip-harry' ||
+  cells[blueVoldemortPosition + 1].className === 'rotate-harry-up' ||
+  cells[blueVoldemortPosition + 1].className === 'rotate-harry-down'){
+   //*Move to the Voldermort right
+   if (horizontalPosition < width - 1 && rightPositionsToAvoid.every(avoidBlock,blueVoldemortPosition)){
+    removeBlueVoldemort()
+    blueVoldemortPosition ++
+    addBlueVoldemort()
+    } 
+    }if (cells[blueVoldemortPosition + 2].className === 'harry' ||
+    cells[blueVoldemortPosition + 2].className === 'flip-harry' ||
+    cells[blueVoldemortPosition+ + 2].className === 'rotate-harry-up' ||
+    cells[blueVoldemortPosition+ 2].className === 'rotate-harry-down'){
+     //*Move to the Voldermort right
+     if (horizontalPosition < width - 1 && rightPositionsToAvoid.every(avoidBlock,blueVoldemortPosition)){
+    removeBlueVoldemort()
+      blueVoldemortPosition++
+      addBlueVoldemort()
+      } 
+      }
+  }
+
+// //* Blue Voldemort Checks one and two divs left for harry
+function  checkLeftBlueVolderMort(){
+  if (cells[blueVoldemortPosition -1].className === 'harry' ||
+cells[blueVoldemortPosition - 1].className === 'flip-harry' ||
+cells[blueVoldemortPosition - 1].className === 'rotate-harry-up' ||
+cells[blueVoldemortPosition - 1].className === 'rotate-harry-down'){
+  //*Move to Right
+  if (horizontalPosition > 0 && leftPositionsToAvoid.every(avoidBlock, blueVoldemortPosition)){
+    removeBlueVoldemort()
+    blueVoldemortPosition--
+    addBlueVoldemort()
+    
+  } 
+  }else if (cells[blueVoldemortPosition -2].className === 'harry' ||
+  cells[blueVoldemortPosition - 2].className === 'flip-harry' ||
+  cells[blueVoldemortPosition - 2].className === 'rotate-harry-up' ||
+  cells[blueVoldemortPosition - 2].className === 'rotate-harry-down'){
+    //*Move to Right
+    if (horizontalPosition > 0 && leftPositionsToAvoid.every(avoidBlock, blueVoldemortPosition)){
+      removeBlueVoldemort()
+      blueVoldemortPosition--
+      addBlueVoldemort()
+    } 
+    }
+}
+ 
+  //*Blue Voldemort checks 1 and two divs up for harry
+ function checkUpBlueVolderMort(){
+  if (cells[blueVoldemortPosition - 14].className === 'rotate-harry-down' || cells[blueVoldemortPosition - 14].className === 'rotate-harry-up'){
+    console.log('yes')
+    if (verticalPosition < 0 && upPositionsToBlock.every(avoidBlock,blueVoldemortPosition)){
+    console.log('yup')
+    removeBlueVoldemort()
+    blueVoldemortPosition -= 14
+    addBlueVoldemort()
+  } 
+  } else if (cells[blueVoldemortPosition - 14].className === 'rotate-harry-down' || cells[blueVoldemortPosition - 14].className === 'rotate-harry-up'){
+    if (verticalPosition < 0 && upPositionsToBlock.every(avoidBlock,blueVoldemortPosition)){
+      
+      removeBlueVoldemort()
+      blueVoldemortPosition -= width
+      addBlueVoldemort()
+    } 
+    }
+}
+  
+//*Blue Voldemort checks two divs down for harry
+  function checkDownBlueVoldemort(){
+    if (cells[blueVoldemortPosition + width].className === 'harry' ||
+	cells[blueVoldemortPosition + width].className === 'flip-harry' ||
+	cells[blueVoldemortPosition + width].className === 'rotate-harry-up' ||
+	cells[blueVoldemortPosition + width].className === 'rotate-harry-down'){
+    if (verticalPosition < width - 1 && downPositionsToBlock.every(avoidBlock, blueVoldemortPosition)){
+      removeBlueVoldemort()
+      blueVoldemortPosition += width
+      addBlueVoldemort()
+    } 
+    } if (cells[blueVoldemortPosition + width + width].className === 'harry' ||
+    cells[blueVoldemortPosition + width + width].className === 'flip-harry' ||
+    cells[blueVoldemortPosition + width + width].className === 'rotate-harry-up' ||
+    cells[blueVoldemortPosition + width + width].className === 'rotate-harry-down'){
+      if (verticalPosition < width - 1 && downPositionsToBlock.every(avoidBlock, blueVoldemortPosition)){
+        removeBlueVoldemort()
+        blueVoldemortPosition += width
+        addBlueVoldemort()
+      } 
+      }
+  }
+ 
+   //* Purple Voldermort checks 1 and two divs right for harry
+ function  checkRightPurpleVoldemort(){
+  if (cells[purpleVoldemortPosition + 1].className === 'harry' ||
+  cells[purpleVoldemortPosition + 1].className === 'flip-harry' ||
+  cells[purpleVoldemortPosition + 1].className === 'rotate-harry-up' ||
+  cells[purpleVoldemortPosition + 1].className === 'rotate-harry-down'){
+   //*Move to the Voldermort right
+   if (horizontalPosition < width - 1 && rightPositionsToAvoid.every(avoidBlock,purpleVoldemortPosition)){
+    removePurpleVoldemort()
+    purpleVoldemortPosition ++
+    addPurpleVoldemort()
+    } 
+    }if (cells[purpleVoldemortPosition + 2].className === 'harry' ||
+    cells[purpleVoldemortPosition + 2].className === 'flip-harry' ||
+    cells[purpleVoldemortPosition+ + 2].className === 'rotate-harry-up' ||
+    cells[purpleVoldemortPosition+ 2].className === 'rotate-harry-down'){
+     //*Move to the Voldermort right
+     if (horizontalPosition < width - 1 && rightPositionsToAvoid.every(avoidBlock,purpleVoldemortPosition)){
+    removePurpleVoldemort()
+      purpleVoldemortPosition++
+      addPurpleVoldemort()
+      } 
+      }
+  }
+
+// //* Purple Voldemort Checks one and two divs left for harry
+function  checkLeftPurpleVolderMort(){
+  if (cells[purpleVoldemortPosition -1].className === 'harry' ||
+cells[purpleVoldemortPosition - 1].className === 'flip-harry' ||
+cells[purpleVoldemortPosition - 1].className === 'rotate-harry-up' ||
+cells[purpleVoldemortPosition - 1].className === 'rotate-harry-down'){
+  //*Move to Right
+  if (horizontalPosition > 0 && leftPositionsToAvoid.every(avoidBlock, purpleVoldemortPosition)){
+    removePurpleVoldemort()
+    purpleVoldemortPosition--
+    addPurpleVoldemort()
+    
+  } 
+  }else if (cells[purpleVoldemortPosition -2].className === 'harry' ||
+  cells[purpleVoldemortPosition - 2].className === 'flip-harry' ||
+  cells[purpleVoldemortPosition - 2].className === 'rotate-harry-up' ||
+  cells[purpleVoldemortPosition - 2].className === 'rotate-harry-down'){
+    //*Move to Right
+    if (horizontalPosition > 0 && leftPositionsToAvoid.every(avoidBlock, purpleVoldemortPosition)){
+      removePurpleVoldemort()
+      purpleVoldemortPosition--
+      addPurpleVoldemort()
+    } 
+    }
+}
+ 
+  //*Purple Voldemort checks 1 and two divs up for harry
+ function checkUpPurpleVolderMort(){
+    
+  if (cells[purpleVoldemortPosition - 14].className === 'rotate-harry-down' || cells[purpleVoldemortPosition - 14].className === 'rotate-harry-up'){
+    if (verticalPosition < 0 && upPositionsToBlock.every(avoidBlock,purpleVoldemortPosition)){
+    removePurpleVoldemort()
+    purpleVoldemortPosition -= width
+    addPurpleVoldemort()
+  } 
+  } else if (cells[purpleVoldemortPosition - 14].className === 'rotate-harry-down' || cells[purpleVoldemortPosition - 14].className === 'rotate-harry-up'){
+    if (verticalPosition < 0 && upPositionsToBlock.every(avoidBlock,purpleVoldemortPosition)){
+      
+      removePurpleVoldemort()
+      purpleVoldemortPosition -= width
+      addPurpleVoldemort()
+    } 
+    }
+}
+  
+//*Blue Voldemort checks two divs down for harry
+  function checkDownPurpleVoldemort(){
+    if (cells[purpleVoldemortPosition + width].className === 'harry' ||
+	cells[purpleVoldemortPosition + width].className === 'flip-harry' ||
+	cells[purpleVoldemortPosition + width].className === 'rotate-harry-up' ||
+	cells[purpleVoldemortPosition + width].className === 'rotate-harry-down'){
+    if (verticalPosition < width - 1 && downPositionsToBlock.every(avoidBlock, purpleVoldemortPosition)){
+      removePurpleVoldemort()
+      purpleVoldemortPosition += width
+      addPurpleVoldemort()
+    } 
+    } if (cells[purpleVoldemortPosition + width + width].className === 'harry' ||
+    cells[purpleVoldemortPosition + width + width].className === 'flip-harry' ||
+    cells[purpleVoldemortPosition + width + width].className === 'rotate-harry-up' ||
+    cells[purpleVoldemortPosition + width + width].className === 'rotate-harry-down'){
+      if (verticalPosition < width - 1 && downPositionsToBlock.every(avoidBlock, purpleVoldemortPosition)){
+        removePurpleVoldemort()
+        purpleVoldemortPosition += width
+        addPurpleVoldemort()
+      } 
+      }
+  }
+
+ let yellowTimer1 = null
+ let yellowTimer2 = null
+
+ function autoMoveYellowVolderMort(){
+   let counter = 0
+   if(yellowTimer1){
+     return
+   }
+   
+   yellowTimer1 = setInterval(() => {
+   if(counter < 11){
+
+    if(verticalPosition < width - 1 && cells[yellowVoldemortPosition].className !== 'bottom-border yellow-voldemort' ){
+      counter++
+      removeYellowVoldemort()
+      yellowVoldemortPosition += width
+      addYellowVoldemort()
+      
+    }
+   }
+   }, 1000)
+   if(yellowTimer2){
+    return
+  }
+   yellowTimer2 = setInterval(() => {
+    if(counter < 11){
+ 
+     if(horizontalPosition > 0 && cells[yellowVoldemortPosition].className !== 'bottom-border yellow-voldemort' ){
+       counter++
+       removeYellowVoldemort()
+       yellowVoldemortPosition += -1
+       addYellowVoldemort()
+       
+     }
+    }
+    }, 1000)
+   
+ }
+  
+ 
+
+
+
+ 
+  //!-------------------EVENT HANDLER--------------------------------------
 
   document.addEventListener('keyup', handleKeyUp)
 
