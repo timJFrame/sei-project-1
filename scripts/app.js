@@ -12,19 +12,11 @@ function init (){
   let harryPosition = 180
   const harryClass = 'harry'
   let harryLives = 3
-  const redVoldemortPosition = 76
-  const purpleVoldemortPosition = 77
-  let blueVoldemortPosition = 90
-  let yellowVoldemortPosition = 91
-  const redVoldemortClass = 'red-voldemort'
-  const purpleVoldemortClass = 'purple-voldemort'
-  const blueVoldemortClass = 'blue-voldemort'
-  const yellowVoldemortClass = 'yellow-voldemort'
-  let yellowVoldemortTimer = null
-  let blueVoldemortTimer = null
-
-  const horizontalPosition = harryPosition % width
-  const verticalPosition = Math.floor(harryPosition / width)
+  
+  const voldemortPosition = 91
+  const voldermortClass = 'voldemort'
+  let voldemortTimer = null
+  
 
   //!-------------------FUNCTIONS--------------------------------------
 
@@ -34,7 +26,7 @@ function init (){
   function createGameGrid(){
     for (let i = 0; i < gridCellCount; i++){
       const cell = document.createElement('div')
-      // cell.innerHTML = i
+      cell.innerHTML = i
       grid.appendChild(cell)
       cells.push(cell)
     }
@@ -246,11 +238,8 @@ function init (){
     removeFlipHarry()
     removeRotateHarryUp()
     removeRotateHarryDown()
-    removeYellowVoldemort()
-    addRedVoldemort()
-    addPurpleVoldemort()
-    addBlueVoldemort()
-    addYellowVoldemort()
+    
+    
    
 
     const horizontalPosition = harryPosition % width
@@ -262,327 +251,89 @@ function init (){
         if (horizontalPosition < width - 1 && cells[harryPosition + 1].dataset.id !== 'block') 
           harryPosition++
         flipHarry()
-        
-
-        checkRightYellowVoldemort()
-        checkLeftYellowVolderMort()
-        checkUpYellowVolderMort()
-        checkDownYellowVoldemort()
-        
-        
-       
-        
-       
         break
       case 37://*Move Left
         if (horizontalPosition > 0 && cells[harryPosition - 1].dataset.id !== 'block') 
           harryPosition--
         addHarry()
-
-        
-      
-        checkRightYellowVoldemort()
-        checkLeftYellowVolderMort()
-        checkUpYellowVolderMort()
-        checkDownYellowVoldemort()
-        
-    
-       
-        
-        
-
         break
       case 38://*Move Up
         if (verticalPosition > 0 && cells[harryPosition - width].dataset.id !== 'block')
           harryPosition -= width
         rotateHarryUp()
 
-        
-        
-        checkRightYellowVoldemort()
-        checkLeftYellowVolderMort()
-        checkUpYellowVolderMort()
-        checkDownYellowVoldemort()
-        
-       
-
-        
         break
       case 40://*Move down
         if (verticalPosition < width - 1 && cells[harryPosition + width].dataset.id !== 'block') 
           harryPosition += width
         rotateHarryDown()
-
-        checkRightYellowVoldemort()
-        checkLeftYellowVolderMort()
-        checkUpYellowVolderMort()
-        checkDownYellowVoldemort()
-        
-       
-
         
         break
       default:
         console.log('invaild key')
     } 
-    yellowVoldemortAutoMovement()
+    //
+   
     addHarry()
   }
 
   //*Add Voldemort ghost to page
-  function addRedVoldemort(){
-    cells[redVoldemortPosition].classList.add(redVoldemortClass)
+  
+  function addVoldemort(){
+    cells[voldemortPosition].classList.add('voldemort')
+
   }
-  function addPurpleVoldemort(){
-    cells[purpleVoldemortPosition].classList.add(purpleVoldemortClass)
-  }
-  function addBlueVoldemort(){
-    cells[blueVoldemortPosition].classList.add(blueVoldemortClass)
-  }
-  function addYellowVoldemort(){
-    cells[yellowVoldemortPosition].classList.add(yellowVoldemortClass)
-  }
+
 
   //*Removes voldermort from pages
-  function removeRedVoldemort(){
-    cells[redVoldemortPosition].classList.remove(redVoldemortClass)
-  }
-  function removePurpleVoldemort(){
-    cells[purpleVoldemortPosition].classList.remove(purpleVoldemortClass)
-  }
-  function removeBlueVoldemort(){
-    cells[blueVoldemortPosition].classList.remove(blueVoldemortClass)
-  }
-  function removeYellowVoldemort(){
-    cells[yellowVoldemortPosition].classList.remove(yellowVoldemortClass)
+  function removeVoldemort(){
+    cells[voldemortPosition].classList.remove('voldemort')
   }
   
 
-  //*Yellow Voldermort checks 1 and two divs right for harry
-  function  checkRightYellowVoldemort(){
-    if (cells[yellowVoldemortPosition + 1].className === 'harry' ||
-  cells[yellowVoldemortPosition + 1].className === 'flip-harry' ||
-  cells[yellowVoldemortPosition + 1].className === 'rotate-harry-up' ||
-  cells[yellowVoldemortPosition + 1].className === 'rotate-harry-down'){
-      //*Move to the Voldermort right
-      if (horizontalPosition < width - 1 && cells[yellowVoldemortPosition + 1].dataset.id !== 'block'){
-        removeYellowVoldemort()
-        yellowVoldemortPosition ++
-        addYellowVoldemort()
-      } 
-    } else if (cells[yellowVoldemortPosition + 2].className === 'harry' ||
-    cells[yellowVoldemortPosition + 2].className === 'flip-harry' ||
-    cells[yellowVoldemortPosition + + 2].className === 'rotate-harry-up' ||
-    cells[yellowVoldemortPosition + 2].className === 'rotate-harry-down'){
-      //*Move to the Voldermort right
-      if (horizontalPosition < width - 1 && cells[yellowVoldemortPosition + 1].dataset.id !== 'block'){
-        removeYellowVoldemort()
-        yellowVoldemortPosition++
-        addYellowVoldemort()
-      } 
-    } else if (cells[yellowVoldemortPosition + 3].className === 'harry' ||
-    cells[yellowVoldemortPosition + 3].className === 'flip-harry' ||
-    cells[yellowVoldemortPosition + + 3].className === 'rotate-harry-up' ||
-    cells[yellowVoldemortPosition + 3].className === 'rotate-harry-down'){
-      //*Move to the Voldermort right
-      if (horizontalPosition < width - 1 && cells[yellowVoldemortPosition + 1].dataset.id !== 'block'){
-        removeYellowVoldemort()
-        yellowVoldemortPosition++
-        addYellowVoldemort()
-      } 
-    }
-    harryLosesLife(yellowVoldemortPosition)
-  }
-
-  //* Check left two divs
-  function  checkLeftYellowVolderMort(){
-    if (cells[yellowVoldemortPosition - 1].className === 'harry' ||
-cells[yellowVoldemortPosition - 1].className === 'flip-harry' ||
-cells[yellowVoldemortPosition - 1].className === 'rotate-harry-up' ||
-cells[yellowVoldemortPosition - 1].className === 'rotate-harry-down'){
-      //*Move to Right
-      if (horizontalPosition > 0 && cells[yellowVoldemortPosition - 1].dataset.id !== 'block'){
-        removeYellowVoldemort()
-        yellowVoldemortPosition--
-        addYellowVoldemort()
-    
-      } 
-    } else if (cells[yellowVoldemortPosition - 2].className === 'harry' ||
-  cells[yellowVoldemortPosition - 2].className === 'flip-harry' ||
-  cells[yellowVoldemortPosition - 2].className === 'rotate-harry-up' ||
-  cells[yellowVoldemortPosition - 2].className === 'rotate-harry-down'){
-    //*Move to Right
-      if (horizontalPosition > 0 && cells[yellowVoldemortPosition - 1].dataset.id !== 'block'){
-        removeYellowVoldemort()
-        yellowVoldemortPosition--
-        addYellowVoldemort()
-      } 
-    } else if (cells[yellowVoldemortPosition - 3].className === 'harry' ||
-    cells[yellowVoldemortPosition - 3].className === 'flip-harry' ||
-    cells[yellowVoldemortPosition - 3].className === 'rotate-harry-up' ||
-    cells[yellowVoldemortPosition - 3].className === 'rotate-harry-down'){
-      //*Move to Right
-      if (horizontalPosition > 0 && cells[yellowVoldemortPosition - 1].dataset.id !== 'block'){
-        removeYellowVoldemort()
-        yellowVoldemortPosition--
-        addYellowVoldemort()
-      } 
-    }
-    harryLosesLife(yellowVoldemortPosition)
-  }
- 
+  addVoldemort()
   
+  const voldemortMovements = ['toLeft', 'toRight', 'toUp', 'toDown']
 
-  //*Check up two divs
-  function checkUpYellowVolderMort(){
-    if (cells[yellowVoldemortPosition - width].className === 'harry' ||
-    cells[yellowVoldemortPosition - width].className === 'flip-harry' ||
-    cells[yellowVoldemortPosition - width].className === 'rotate-harry-up' ||
-    cells[yellowVoldemortPosition - width].className === 'rotate-harry-down'){
-    
-      if (verticalPosition > 0 && cells[yellowVoldemortPosition - width].dataset.id !== 'block'){
-    
-        removeYellowVoldemort()
-        yellowVoldemortPosition -= width
-        addYellowVoldemort()
-      } 
-    } else if (cells[yellowVoldemortPosition - 28].className === 'harry' ||
-    cells[yellowVoldemortPosition - 28].className === 'flip-harry' ||
-    cells[yellowVoldemortPosition - 28].className === 'rotate-harry-up' ||
-    cells[yellowVoldemortPosition - 28].className === 'rotate-harry-down'){
-      if (verticalPosition > 0 && cells[yellowVoldemortPosition - width].dataset.id !== 'block'){
-        removeYellowVoldemort()
-        yellowVoldemortPosition -= width
-        addYellowVoldemort()
-      } 
-    } else if (cells[yellowVoldemortPosition - 42].className === 'harry' ||
-    cells[yellowVoldemortPosition - 42].className === 'flip-harry' ||
-    cells[yellowVoldemortPosition - 42].className === 'rotate-harry-up' ||
-    cells[yellowVoldemortPosition - 42].className === 'rotate-harry-down'){
-      if (verticalPosition > 0 && cells[yellowVoldemortPosition - width].dataset.id !== 'block'){
-        removeYellowVoldemort()
-        yellowVoldemortPosition -= width
-        addYellowVoldemort()
-      } 
-    }
-    harryLosesLife(yellowVoldemortPosition)
-  }
-  
-  //*Check down two divs
-  function checkDownYellowVoldemort(){
-    if (cells[yellowVoldemortPosition + width].className === 'harry' ||
-	cells[yellowVoldemortPosition + width].className === 'flip-harry' ||
-	cells[yellowVoldemortPosition + width].className === 'rotate-harry-up' ||
-	cells[yellowVoldemortPosition + width].className === 'rotate-harry-down'){
-      if (verticalPosition < width - 1 && cells[yellowVoldemortPosition + width].dataset.id !== 'block'){
-        console.log(verticalPosition)
-        removeYellowVoldemort()
-        yellowVoldemortPosition += width
-        addYellowVoldemort()
-      }
-    } 
-    // } else if (cells[yellowVoldemortPosition + 28].className === 'harry' ||
-    // cells[yellowVoldemortPosition + 28].className === 'flip-harry' ||
-    // cells[yellowVoldemortPosition + 28].className === 'rotate-harry-up' ||
-    // cells[yellowVoldemortPosition + 28].className === 'rotate-harry-down'){
-    //   if (verticalPosition < width - 1 && cells[yellowVoldemortPosition + width].dataset.id !== 'block'){
-    //     removeYellowVoldemort()
-    //     yellowVoldemortPosition += width
-    //     addYellowVoldemort()
-    //   } 
-    // } else if (cells[yellowVoldemortPosition + 42].className === 'harry' ||
-    // cells[yellowVoldemortPosition + 42].className === 'flip-harry' ||
-    // cells[yellowVoldemortPosition + 42].className === 'rotate-harry-up' ||
-    // cells[yellowVoldemortPosition + 42].className === 'rotate-harry-down'){
-    //   if (verticalPosition < width - 1 && cells[yellowVoldemortPosition + width].dataset.id !== 'block'){
-    //     removeYellowVoldemort()
-    //     yellowVoldemortPosition += width
-    //     addYellowVoldemort()
-    //   } 
-    // }
-    harryLosesLife(yellowVoldemortPosition)
+
+  function randomiseVoldemortMovements(){
+    return voldemortMovements[Math.floor(Math.random() * voldemortMovements.length)]
   }
 
-  let counter = 0
-  function yellowVoldemortAutoMovement(){
-    if (yellowVoldemortTimer)
+  let voldemortMoving = randomiseVoldemortMovements()
+
+  function moveVoldemort(){
+    if (voldemortTimer){
       return
-    yellowVoldemortTimer = setInterval(() =>{
-      counter++
-      console.log(counter)
-      //Move Down
-      if (cells[yellowVoldemortPosition + width].dataset.id !== 'block'){
-        if (verticalPosition < width - 1){
-          removeYellowVoldemort()
-          yellowVoldemortPosition += width
-          addYellowVoldemort()
-        }
-        //* Move Right
-      } else if (cells[yellowVoldemortPosition + 1].dataset.id !== 'block'){
-        if (horizontalPosition < width - 1){
-          removeYellowVoldemort()
-          yellowVoldemortPosition++
-          addYellowVoldemort()
-        }
-        //*Move Up
-      } else if (cells[yellowVoldemortPosition - width] !== 'block'){
-        if (verticalPosition > 0){
-          removeYellowVoldemort()
-          yellowVoldemortPosition -= width
-          addYellowVoldemort()
-          //*Move Down
-        } else if (cells[yellowVoldemortPosition - 1].dataset.id !== 'block'){
-          if (horizontalPosition > 0 ){
-            removeYellowVoldemort()
-            yellowVoldemortPosition--
-            addYellowVoldemort()
-          }
-        }
+    }
+
+    voldemortTimer = setInterval(() => {
+
+      switch (voldemortMoving){
+        case 'toLeft':
+          voldemortMoving = randomiseVoldemortMovements()
+          console.log('left')
+          break
+        case 'toRight':
+          voldemortMoving = randomiseVoldemortMovements()
+         console.log('right')
+          break 
+        case 'toUp':
+          voldemortMoving = randomiseVoldemortMovements()
+          console.log('up')
+          break
+        case 'toDown':
+          voldemortMoving = randomiseVoldemortMovements()
+          console.log('down')
+          break
+        default:
+          console.log('No movement')
       }
     }, 1000)
   }
 
-  function blueVoldemortAutoMovement(){
-    if (blueVoldemortTimer)
-      return
-    blueVoldemortTimer = setInterval(() =>{
-    
-      //*Move Down
-      if (cells[blueVoldemortPosition + width].dataset.id !== 'block'){
-        if (verticalPosition < width - 1){
-          removeBlueVoldemort()
-          blueVoldemortPosition += width
-          addBlueVoldemort()
-        }
-        //*Move Left
-      } else if (cells[blueVoldemortPosition - 1].dataset.id !== 'block'){
-        if (horizontalPosition > 0 ){
-          removeBlueVoldemort()
-          blueVoldemortPosition--
-          addBlueVoldemort()
-        }	//*Move Down
-      } else if (cells[blueVoldemortPosition - width] !== 'block'){
-        if (verticalPosition > 0){
-          removeBlueVoldemort()
-          blueVoldemortPosition -= width
-          addBlueVoldemort()
-        } //* Move Right
-        else if (cells[blueVoldemortPosition + 1].dataset.id !== 'block'){
-          if (horizontalPosition < width - 1){
-            removeBlueVoldemort()
-            blueVoldemortPosition++
-            addBlueVoldemort()
-          }
-        }
-      }
-      
-    }, 1000)
-  }
+  moveVoldemort()
   
-
-  
-  
-
 
   //*Moves harry back to original starting position and removes one life when Harry intersects with Voldemort
   function harryLosesLife(voldemortPosition){
