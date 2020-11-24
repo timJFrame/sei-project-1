@@ -324,60 +324,145 @@ function init (){
   }
 
 
-//*moveVoldemort controls the random movement of the voldemort ghosts using setInterval timer
+  //*moveVoldemort controls the random movement of the voldemort ghosts using setInterval timer
   function moveVoldemort(index){
-     let = setInterval(() => {
+    let timer = null
+    if (timer){
+      return
+    }
+    let counter = 0
+    timer = setInterval(() => {
       removeVoldemorts(index)
-        
-
+      
       if (randomiseVoldemortMovements() === 'left'){
         //*Move Left
         if (cells[voldemorts[index].position - 1].dataset.id !== 'block'){
           voldemorts[index].position--
-          console.log('left')
+          // console.log('left')
         } 
         //*Move Right
       } else if (randomiseVoldemortMovements() === 'right'){
         if (cells[voldemorts[index].position + 1].dataset.id !== 'block'){
           voldemorts[index].position++
-          console.log('right')
+          // console.log('right')
         }
         //*Move Up
       } else if (randomiseVoldemortMovements() === 'up'){
         if (cells[voldemorts[index].position - width].dataset.id !== 'block'){
           voldemorts[index].position -= width
-          console.log('up')
+          // console.log('up')
 
         }//*Move Down
       } else if (randomiseVoldemortMovements() === 'down'){
         if (cells[voldemorts[index].position + width].dataset.id !== 'block'){
           voldemorts[index].position += width
-          console.log('down')
+          // console.log('down')
         }
       }
       addVoldemorts(index)
-
-    }, 500)
+      counter++
+      console.log(counter)
+    }, 300)
   }
 
 
 
- function startGame(){
-   
- }
+  function moveOutRight(index){
+    const timer = setInterval(()=> {
+      removeVoldemorts(index)
+      if (cells[voldemorts[index].position + width].dataset.id !== 'block'){
+        voldemorts[index].position += width
+        console.log('down')
+      } if (cells[voldemorts[index].position + 1].dataset.id !== 'block'){
+        voldemorts[index].position++
+      // console.log('right')
+      }
+      addVoldemorts(index)
+    }, 400)
+    setTimeout(() =>{
+      clearInterval(timer)
+    }, 3000)  
+  }
 
-  moveVoldemort(0)
-  setTimeout(() => {
-    moveVoldemort(1)
-  }, 3000)
 
-  setTimeout(() => {
-    moveVoldemort(2)
-  }, 5000)
+  function moveOutLeft(index){
+    const timer = setInterval(()=> {
+      removeVoldemorts(index)
+      if (cells[voldemorts[index].position + width].dataset.id !== 'block'){
+        voldemorts[index].position += width
+        console.log('down')
+      } if (cells[voldemorts[index].position - 1].dataset.id !== 'block'){
+          voldemorts[index].position--
+          // console.log('left')
+        } 
+      addVoldemorts(index)
+    }, 400)
+    setTimeout(() =>{
+      clearInterval(timer)
+    }, 3000)  
+
+  }
+
+
+
+  function startGame(){
+
+    //*Moves GhostOne out and away from holding box
+    moveOutRight(0)
+    setTimeout(()=>{
+      moveVoldemort(0)
+    }, 2000)
+
+    //*Moves Ghost Two out and away from holding box
+    moveOutLeft(1)
+    setTimeout(()=>{
+      moveVoldemort(1)
+    }, 2000)
+
+//*Moves Ghost four out and away from holding box
+    setTimeout(() => {
+      moveOutRight(3)
+      setTimeout(()=>{
+        moveVoldemort(3)
+      }, 2000)
+    }, 3000)
+
+//*Moves ghost three out and away from holding box
+    setTimeout(() => {
+      moveOutLeft(2)
+      setTimeout(()=>{
+        moveVoldemort(2)
+      }, 2000)
+    }, 3000)
+    
+    }
+
+  
+
+  //
+
+
+
+
+
+
+  startGame()
+
+
+  
+
+  
+  // setTimeout(() => {
+  //   moveVoldemort(1)
+  // }, 3000)
+
+  // setTimeout(() => {
+  //   moveVoldemort(2)
+  // }, 5000)
  
-  setTimeout(() => {
-    moveVoldemort(3)
-  }, 3000)
+  // setTimeout(() => {
+  //   moveVoldemort(3)
+  // }, 3000)
 
 
 
