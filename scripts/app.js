@@ -13,9 +13,9 @@ function init (){
   const harryClass = 'harry'
   let harryLives = 3
   
-  let voldemortPosition = 91
-  const voldermortClass = 'voldemort'
-  let voldemortTimer = null
+  
+  const voldemortClass = 'voldemort'
+  const gameTimer = null
   
 
   //!-------------------FUNCTIONS--------------------------------------
@@ -192,6 +192,8 @@ function init (){
   }
   createGameBlocks()
 
+  //*------------------------------Harry Movement Logic------------------------------
+
   //* Adds Harry to a div
   function addHarry(){
     cells[harryPosition].classList.add(harryClass)
@@ -239,9 +241,6 @@ function init (){
     removeRotateHarryUp()
     removeRotateHarryDown()
     
-    
-   
-
     const horizontalPosition = harryPosition % width
     const verticalPosition = Math.floor(harryPosition / width)
 
@@ -277,84 +276,126 @@ function init (){
     addHarry()
   }
 
-  //*Add Voldemort ghost to page
+  //*----------------------------------Voldemort Movement Logic----------------------------
+
+  //*Array of objects holding four Voldemort ghosts
+  const voldemorts = [
+    {
+      name: 'voldemortOne',
+      position: 90,
+      lengthOfTimer: 500,
+    },
+    {
+      name: 'voldemortTwo',
+      position: 91,
+      lengthOfTimer: 500,
+    },
+    {
+      name: 'voldemortThree',
+      position: 76,
+      lengthOfTimer: 500,
+    },
+    {
+      name: 'voldemortFour',
+      position: 77,
+      lengthOfTimer: 500,
+    }
+  ]
   
-  function addVoldemort(){
-    cells[voldemortPosition].classList.add('voldemort')
-
+  //*Add Voldemort ghost to page
+  function addVoldemorts(index){
+    cells[voldemorts[index].position].classList.add(voldemortClass)
   }
-
 
   //*Removes voldermort from pages
-  function removeVoldemort(){
-    cells[voldemortPosition].classList.remove('voldemort')
+  function removeVoldemorts(index){
+    cells[voldemorts[index].position].classList.remove(voldemortClass)
   }
-  
 
-  addVoldemort()
+
+  //*Adding Voldemort Ghosts to the page
   
+  //*Array used in if statement to move voldemort ghosts
   const voldemortMovements = ['left', 'right', 'up', 'down']
 
-
+  //*Returns a random movement
   function randomiseVoldemortMovements(){
     return voldemortMovements[Math.floor(Math.random() * voldemortMovements.length)]
   }
 
-  let voldemortMoving = randomiseVoldemortMovements()
 
-  
-  console.log(cells[55].dataset.id)
+//*moveVoldemort controls the random movement of the voldemort ghosts using setInterval timer
+  function moveVoldemort(index){
+     let = setInterval(() => {
+      removeVoldemorts(index)
+        
 
-  function moveVoldemort(){
-    if (voldemortTimer){
-      return
-    }
-
-   
-  
-
-
-    voldemortTimer = setInterval(() => {
-      
-      removeVoldemort()
       if (randomiseVoldemortMovements() === 'left'){
         //*Move Left
-        if(cells[voldemortPosition - 1].dataset.id !== 'block'){
-          removeVoldemort()
-          voldemortPosition--
-          addVoldemort()
+        if (cells[voldemorts[index].position - 1].dataset.id !== 'block'){
+          voldemorts[index].position--
           console.log('left')
         } 
         //*Move Right
-      }else if (randomiseVoldemortMovements() === 'right'){
-        if(cells[voldemortPosition + 1].dataset.id !== 'block'){
-          voldemortPosition++
+      } else if (randomiseVoldemortMovements() === 'right'){
+        if (cells[voldemorts[index].position + 1].dataset.id !== 'block'){
+          voldemorts[index].position++
           console.log('right')
         }
         //*Move Up
       } else if (randomiseVoldemortMovements() === 'up'){
-        if(cells[voldemortPosition - width].dataset.id !== 'block'){
-       voldemortPosition -= width
-       console.log('up')
-       }//*Move Down
+        if (cells[voldemorts[index].position - width].dataset.id !== 'block'){
+          voldemorts[index].position -= width
+          console.log('up')
+
+        }//*Move Down
       } else if (randomiseVoldemortMovements() === 'down'){
-        if(cells[voldemortPosition + width].dataset.id !== 'block'){
-          voldemortPosition += width
+        if (cells[voldemorts[index].position + width].dataset.id !== 'block'){
+          voldemorts[index].position += width
           console.log('down')
         }
-        
-       
       }
-      
-     
-          
-      
-      addVoldemort()
-    }, 200)
+      addVoldemorts(index)
+
+    }, 500)
   }
 
 
-  moveVoldemort()
+
+ function startGame(){
+   
+ }
+
+  moveVoldemort(0)
+  setTimeout(() => {
+    moveVoldemort(1)
+  }, 3000)
+
+  setTimeout(() => {
+    moveVoldemort(2)
+  }, 5000)
+ 
+  setTimeout(() => {
+    moveVoldemort(3)
+  }, 3000)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   //*Moves harry back to original starting position and removes one life when Harry intersects with Voldemort
   function harryLosesLife(voldemortPosition){
