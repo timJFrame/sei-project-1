@@ -12,14 +12,23 @@ function init (){
   let harryPosition = 180
   const harryClass = 'harry'
   let harryLives = 3
+  let playerScore = 0
+  const playerScoreString = document.querySelector('.player-score')
+ 
   const startButton = document.querySelector('.start-button')
   console.log(startButton)
   const life1 = document.querySelector('.life1')
   const life2 = document.querySelector('.life2')
   const life3 = document.querySelector('.life3')
-  console.log(life1)
   
   
+  const voldermortOneTimer = null
+  const voldermortTwoTimer = null
+  const voldermortThreeTimer = null
+  const voldermortFourTimer = null
+
+  let isGameOverPlayerLost = 'no'
+  let isGameOverPlayerWon = 'no'
   
   const voldemortClass = 'voldemort'
   let gameTimer = null
@@ -203,13 +212,17 @@ function init (){
     cells[index].setAttribute('data-id', 'block')
   }
 
-  const foodArray = [15,16,17,18,19,20,21,22,23,24,25,26,29,33,36,40,43,47,50,54,57,61,64,68, 71, 72,73, 74, 79,80, 81,82,85,88,93,,96,99,102,103,104,105,106,107,110,111,112,113,114,115,116,117,120,121,122,123,124,127,131,134,138,141,145,148,152,155,159,162,166,169, 170, 171, 172, 173, 174, 175, 176, 177, 178,179,180]
+  const foodArray = [15,16,17,18,19,21,22,23,24,25,26,29,33,36,40,43,47,50,54,57,61,64,68, 71,72,73, 74, 79,80, 81,82,85,88,93,96,102,103,104,105,106,107,113,114,115,116,117,120,121,122,123,124,127,131,134,138,141,145,148,152,155,159,162,166,169, 170, 171, 172, 173,175, 176, 177, 178,179,180]
 
   foodArray.forEach(item =>{
     cells[item].classList.add('food')
   })
 
+  const specialFoodArray = [99,110,20,174]
 
+  specialFoodArray.forEach(item =>{
+    cells[item].classList.add('power-up')
+  })
 
 
   //*------------------------------Harry Movement Logic------------------------------
@@ -270,32 +283,33 @@ function init (){
         if (horizontalPosition < width - 1 && cells[harryPosition + 1].dataset.id !== 'block') 
           harryPosition++
         flipHarry()
-        harryLosesLifeCheck()
-        checkAndUpdateHarrysLife()
-
+        harryLosesLife()
+        harryEatsFood()
+        harryEatsSpecialFood()
         break
       case 37://*Move Left
         if (horizontalPosition > 0 && cells[harryPosition - 1].dataset.id !== 'block') 
           harryPosition--
         addHarry()
-        harryLosesLifeCheck()
-        checkAndUpdateHarrysLife()
-
+        harryLosesLife()
+        harryEatsFood()
+        harryEatsSpecialFood()
         break
       case 38://*Move Up
         if (verticalPosition > 0 && cells[harryPosition - width].dataset.id !== 'block')
           harryPosition -= width
         rotateHarryUp()
-       harryLosesLifeCheck()
-       checkAndUpdateHarrysLife()
-
+        harryLosesLife()
+        harryEatsFood()
+        harryEatsSpecialFood()
         break
       case 40://*Move down
         if (verticalPosition < width - 1 && cells[harryPosition + width].dataset.id !== 'block') 
           harryPosition += width
         rotateHarryDown()
-        harryLosesLifeCheck()
-        checkAndUpdateHarrysLife()
+        harryLosesLife()
+        harryEatsFood()
+        harryEatsSpecialFood()
         break
       default:
         console.log('invaild key')
@@ -354,8 +368,7 @@ function init (){
 
 
   //*moveVoldemort controls the random movement of the voldemort ghosts using setInterval timer
-  function moveVoldemort(index){
-    let timer = null
+  function moveVoldemort(index, timer){
     if (timer){
       return
     }
@@ -388,11 +401,50 @@ function init (){
           // console.log('down')
         }
       }
+
+      if (isGameOverPlayerLost === 'yes' || isGameOverPlayerWon === 'yes'){
+        console.dir(timer)
+        stopTimer(timer)
+        
+      }
+
       addVoldemorts(index)
-     
-     
     }, 300)
+   
   }
+
+  //*Stops timer inside moveVoldemort Function
+  function stopTimer(timer){
+    clearInterval(timer)
+  }
+
+
+  function voldemortTrackingFunction(index, horzintalDistance, verticalDistance){
+    removeVoldemorts(index)
+    //*Search left
+    if (cells[voldemorts[index].position - horzintalDistance].className.includes('harry')){
+      voldemorts[index].position--
+      console.log('search left')
+    //*Seach Right
+    } else if (cells[voldemorts[index].position + horzintalDistance].className.includes('harry')){
+      voldemorts[index].position++
+      console.log('seach right')
+    //* Search Up
+    } else if (cells[voldemorts[index].position - verticalDistance].className.includes('harry')){
+      voldemorts[index].position -= width
+      console.log('search up')
+    //*Searches Down
+    } else if (cells[voldemorts[index].position + verticalDistance].className.includes('harry')){
+      voldemorts[index].position += width
+      console.log('search down')
+    }
+    addVoldemorts(index)
+  }
+
+
+
+
+
 
 
 
@@ -438,65 +490,21 @@ function init (){
     createBottomBlock(91)
   }
 
-  function handleGameStart(){
-
-    addHarry(harryPosition)
-
-    //*Moves GhostOne out and away from holding box
-    moveOutRight(0)
-    setTimeout(()=>{
-      moveVoldemort(0)
-    }, 2000)
-
-    //*Moves Ghost Two out and away from holding box
-    moveOutLeft(1)
-    setTimeout(()=>{
-      moveVoldemort(1)
-    }, 2000)
-
-    //*Moves Ghost four out and away from holding box
-    setTimeout(() => {
-      moveOutRight(3)
-      setTimeout(()=>{
-        moveVoldemort(3)
-      }, 2000)
-    }, 3000)
-
-    //*Moves ghost three out and away from holding box
-    setTimeout(() => {
-      moveOutLeft(2)
-      setTimeout(()=>{
-        moveVoldemort(2)
-      }, 2000)
-    }, 3000)
-  
-    //
-    setTimeout(() =>{
-      closeHoldingBox()
-  
-    }, 5000)
-    
-    if(gameTimer){
-      return
-    }
-    let counter = 0;
-    gameTimer = setInterval(() =>{
-      counter++
-      // console.log(counter)
-      checkAndUpdateHarrysLife()
-    }, 1000)
-
+  function removeHoldingBox(){
+    cells[90].classList.remove('block-bottom-side')
+    cells[91].classList.remove('block-bottom-side')
   }
+  
 
- 
+  //**---------------------------------Harry life and Eating Functions------------------------- */
 
 
-  //
+
 
   //*Moves harry back to original starting position and removes one life when Harry intersects with Voldemort
-  function harryLosesLife(voldemortPosition){
-    if (voldemortPosition === harryPosition){
-      life1.style.display = 'none'
+  function harryLosesLife(){
+    if (cells[harryPosition].className.includes('voldemort')){
+      
       for (let i = 0; i < cells.length; i++){
         cells[i].classList.remove('harry')
         cells[i].classList.remove('flip-harry')
@@ -505,23 +513,131 @@ function init (){
       }
       harryLives -= 1
       harryPosition = 180
-      
-      console.log(harryLives)
+      if (harryLives === 2){
+        life1.style.display = 'none'
+      } else if (harryLives === 1){
+        life2.style.display = 'none'
+      } else if (harryLives === 0){
+        life3.style.display = 'none'
+        alert('You lost!!! You\'re all out of lives')
+        isGameOverPlayerLost = 'yes'
+      }
+
+     
+      console.log('loses life functtion' + harryLives)
     }
   }
  
-  function harryLosesLifeCheck(){
-    harryLosesLife(voldemorts[0].position)
-    harryLosesLife(voldemorts[1].position)
-    harryLosesLife(voldemorts[2].position)
-    harryLosesLife(voldemorts[3].position)
+  //*Function runs when harry eats food
+  function harryEatsFood(){
+    if (cells[harryPosition].className.includes('food')){
+      cells[harryPosition].classList.remove('food')
+      playerScore += 5
+      console.log(playerScore)
+      playerScoreString.innerHTML = `Score: ${playerScore}`
+      if (playerScore > 449){
+        isGameOverPlayerWon = 'yes'
+        console.log('met')
+        alert('Congraduations You won!!!!')
+      }
+    }
+  }
+  //*Function Runs when harry eats special food
+
+  function harryEatsSpecialFood(){
+    if (cells[harryPosition].className.includes('power-up')){
+      removeHoldingBox()
+      cells[harryPosition].classList.remove('power-up')
+      playerScore += 20
+      console.log(playerScore)
+      playerScoreString.innerHTML = `Score: ${playerScore}`
+      if (playerScore > 449){
+        isGameOverPlayerWon = 'yes'
+        console.log('met')
+        alert('Congraduations You won!!!!')
+      }
+    }
   }
 
-  function checkAndUpdateHarrysLife(){
-   
+ 
+
+  //*------------------------------------Start game and End game functions----------------------------------
+
+  function handleGameStart(){
+
+    addHarry(harryPosition)
+
+  
+    //*Moves GhostOne out and away from holding box
+    moveOutRight(0)
+    setTimeout(()=>{
+      moveVoldemort(0, voldermortOneTimer)
+      
+    }, 2000)
+
+    //*Moves Ghost Two out and away from holding box
+    moveOutLeft(1)
+    setTimeout(()=>{
+      moveVoldemort(1, voldermortTwoTimer)
+      
+    }, 2000)
+
+    //*Moves Ghost four out and away from holding box
+    setTimeout(() => {
+      moveOutRight(3)
+      setTimeout(()=>{
+        moveVoldemort(3, voldermortThreeTimer)
+       
+      }, 2000)
+    }, 3000)
+
+    //*Moves ghost three out and away from holding box
+    setTimeout(() => {
+      moveOutLeft(2)
+      setTimeout(()=>{
+        moveVoldemort(2, voldermortFourTimer)
+        
+      }, 2000)
+    }, 3000)
+
+
+    //*Closes box that holds voldemort
+    setTimeout(() =>{
+      closeHoldingBox()
+    }, 5000)
     
-    
+
+    if (gameTimer){
+      return
+    }
+    let counter = 0
+    gameTimer = setInterval(() =>{
+
+      //*Searches 1 div radius for harry
+      voldemortTrackingFunction(0, 1, 14)
+      voldemortTrackingFunction(1, 1, 14)
+      voldemortTrackingFunction(2, 1, 14)
+      voldemortTrackingFunction(3, 1, 14)
+
+
+      //*Tests if either the player or computer has won and reloads browser in either event
+      if (isGameOverPlayerLost === 'yes' || isGameOverPlayerWon === 'yes'){
+        console.log('condition meet')
+        gameOver()
+      }
+
+      counter++
+      // console.log(counter)
+    }, 1000)
+
   }
+  
+  //** Reloads page when game ends 
+  function gameOver(){
+    location.reload()
+
+  }
+
 
 
  
