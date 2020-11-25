@@ -4,6 +4,15 @@ function init (){
 
   //* Dom Variables
   const grid = document.querySelector('.grid')
+  const life1 = document.querySelector('.life1')
+  const life2 = document.querySelector('.life2')
+  const life3 = document.querySelector('.life3')
+  const playerScoreString = document.querySelector('.player-score')
+  const startButton = document.querySelector('.start-button')
+  const gamesound = document.querySelector('audio')
+
+  console.log(gamesound)
+
 
   //*Game variable
   const cells = []
@@ -13,27 +22,20 @@ function init (){
   const harryClass = 'harry'
   let harryLives = 3
   let playerScore = 0
-  const playerScoreString = document.querySelector('.player-score')
+  let gameTimer = null
+  let isGameOverPlayerLost = 'no'
+  let isGameOverPlayerWon = 'no'
+  const voldemortClass = 'voldemort'
  
-  const startButton = document.querySelector('.start-button')
-  console.log(startButton)
-  const life1 = document.querySelector('.life1')
-  const life2 = document.querySelector('.life2')
-  const life3 = document.querySelector('.life3')
   
-  const horizontalPosition = harryPosition % width
-  const verticalPosition = Math.floor(harryPosition / width)
-
+  
+  
+  
   const voldermortOneTimer = null
   const voldermortTwoTimer = null
   const voldermortThreeTimer = null
   const voldermortFourTimer = null
 
-  let isGameOverPlayerLost = 'no'
-  let isGameOverPlayerWon = 'no'
-  
-  const voldemortClass = 'voldemort'
-  let gameTimer = null
   
 
   //!-------------------FUNCTIONS--------------------------------------
@@ -443,13 +445,7 @@ function init (){
     addVoldemorts(index)
   }
 
-
-
-
-
-
-
-
+  //*Moves voldemorts ghost out of holding box to the right of the page
   function moveOutRight(index){
     const timer = setInterval(()=> {
       removeVoldemorts(index)
@@ -467,7 +463,7 @@ function init (){
     }, 3000)  
   }
 
-
+//*Moves voldemorts ghost out of holding box to the of the page
   function moveOutLeft(index){
     const timer = setInterval(()=> {
       removeVoldemorts(index)
@@ -589,7 +585,7 @@ function init (){
     }
   }
 
- 
+ gamesound.src = 'https://ia801309.us.archive.org/28/items/HarryPotter-hedwigTheme/Harry_Potter_Theme_Song_Hedwigs_Theme.ogg'
 
   //*------------------------------------Start game and End game functions----------------------------------
 
@@ -597,6 +593,7 @@ function init (){
 
     addHarry(harryPosition)
 
+    gamesound.play()
   
     //*Moves GhostOne out and away from holding box
     moveOutRight(0)
@@ -643,11 +640,11 @@ function init (){
 
     gameTimer = setInterval(() =>{
 
-        //*Tests if either the player or computer has won and reloads browser in either event
-        if (isGameOverPlayerLost === 'yes' || isGameOverPlayerWon === 'yes'){
-          console.log('condition meet')
-          gameOver()
-        }
+      //*Tests if either the player or computer has won and reloads browser in either event
+      if (isGameOverPlayerLost === 'yes' || isGameOverPlayerWon === 'yes'){
+        console.log('condition meet')
+        gameOver()
+      }
   
       harryLosesLifeFromVoldemortsView(0)
       harryLosesLifeFromVoldemortsView(1)
@@ -699,7 +696,7 @@ function init (){
   }
 
   function noScroll() {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0)
   }
 
 

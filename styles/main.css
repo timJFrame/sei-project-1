@@ -21,15 +21,42 @@ main{
 	justify-content: center;
 	/* align-items: center; */
 }
+
+.game-options{
+	flex:1;
+	}
+	
+	.logo-image{
+		max-width: 100%;
+	}
+
+	.quest{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		padding: 0px 40px;
+		color: white;
+	}
+	
+
+.quest-heading{
+	font-size: 25px;
+	margin-bottom: -15px;
+}
+
+	.quest-blurb{
+		font-size: 20px;;
+	}
+
+
 .game-options{
 display: flex;
 justify-content: center;
 margin-top: 50px;
 }
 
-.logo{
-	max-width: 100%;
-}
+
 
 .game-info{
 	display: flex;
@@ -41,10 +68,13 @@ color: white;
 text-align: center;
 }
 
+
+
 .start-button{
 	align-self: center;
 	border: none;
 	margin-top: 20px;
+	margin-right:50px;
 	background-color: #000066;
 	color: white;
 	padding: 10px 25px;
@@ -61,17 +91,26 @@ text-align: center;
 .life2,
 .life3{
 	margin-top: 40px;
-	max-width: 30%;
+	max-width: 25%;
+}
+
+.token{
+	max-width: 10-%;
 }
 
 .player-score{
 	color: white;
+	text-align: center;
+	margin-right: 35px;
+	margin-top: 30px;
 }
 
-.game-options{
-flex:1;
+.game-tokens{
+	display: flex;
+	flex-direction: column;
+	margin-right: 35px;
+	align-items: center;
 }
-
 
 
 .grid-wrapper {
