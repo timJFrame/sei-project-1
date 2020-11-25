@@ -21,7 +21,9 @@ function init (){
   const life2 = document.querySelector('.life2')
   const life3 = document.querySelector('.life3')
   
-  
+  const horizontalPosition = harryPosition % width
+  const verticalPosition = Math.floor(harryPosition / width)
+
   const voldermortOneTimer = null
   const voldermortTwoTimer = null
   const voldermortThreeTimer = null
@@ -42,7 +44,7 @@ function init (){
   function createGameGrid(){
     for (let i = 0; i < gridCellCount; i++){
       const cell = document.createElement('div')
-      cell.innerHTML = i
+      // cell.innerHTML = i
       grid.appendChild(cell)
       cells.push(cell)
     }
@@ -527,6 +529,34 @@ function init (){
       console.log('loses life functtion' + harryLives)
     }
   }
+
+
+
+  function harryLosesLifeFromVoldemortsView(index){
+    if (cells[voldemorts[index].position].className.includes('harry')){
+      
+      for (let i = 0; i < cells.length; i++){
+        cells[i].classList.remove('harry')
+        cells[i].classList.remove('flip-harry')
+        cells[i].classList.remove('rotate-harry-up')
+        cells[i].classList.remove('rotate-harry-down')
+      }
+      harryLives -= 1
+      harryPosition = 180
+      if (harryLives === 2){
+        life1.style.display = 'none'
+      } else if (harryLives === 1){
+        life2.style.display = 'none'
+      } else if (harryLives === 0){
+        life3.style.display = 'none'
+        alert('You lost!!! You\'re all out of lives')
+        isGameOverPlayerLost = 'yes'
+      }
+
+     
+      console.log('loses life functtion' + harryLives)
+    }
+  }
  
   //*Function runs when harry eats food
   function harryEatsFood(){
@@ -610,8 +640,19 @@ function init (){
     if (gameTimer){
       return
     }
-    let counter = 0
+
     gameTimer = setInterval(() =>{
+
+        //*Tests if either the player or computer has won and reloads browser in either event
+        if (isGameOverPlayerLost === 'yes' || isGameOverPlayerWon === 'yes'){
+          console.log('condition meet')
+          gameOver()
+        }
+  
+      harryLosesLifeFromVoldemortsView(0)
+      harryLosesLifeFromVoldemortsView(1)
+      harryLosesLifeFromVoldemortsView(2)
+      harryLosesLifeFromVoldemortsView(3)
 
       //*Searches 1 div radius for harry
       voldemortTrackingFunction(0, 1, 14)
@@ -619,14 +660,33 @@ function init (){
       voldemortTrackingFunction(2, 1, 14)
       voldemortTrackingFunction(3, 1, 14)
 
+      // //*Searches 2 div radius for harry
+      // voldemortTrackingFunction(0, 2, 28)
+      // voldemortTrackingFunction(1, 2, 28)
+      // voldemortTrackingFunction(2, 2, 28)
+      // voldemortTrackingFunction(3, 2, 28)
 
-      //*Tests if either the player or computer has won and reloads browser in either event
-      if (isGameOverPlayerLost === 'yes' || isGameOverPlayerWon === 'yes'){
-        console.log('condition meet')
-        gameOver()
-      }
+      // //*Searches 3 div radius for harry
+      // voldemortTrackingFunction(0, 3, 42)
+      // voldemortTrackingFunction(1, 3, 42)
+      // voldemortTrackingFunction(2, 3, 42)
+      // voldemortTrackingFunction(3, 3, 42)
 
-      counter++
+      // //*Searches 4 div radius for harry
+      // voldemortTrackingFunction(0, 4, 56)
+      // voldemortTrackingFunction(1, 4, 56)
+      // voldemortTrackingFunction(2, 4, 56)
+      // voldemortTrackingFunction(3, 4, 56)
+   
+      harryLosesLifeFromVoldemortsView(0)
+      harryLosesLifeFromVoldemortsView(1)
+      harryLosesLifeFromVoldemortsView(2)
+      harryLosesLifeFromVoldemortsView(3)
+
+
+
+    
+     
       // console.log(counter)
     }, 1000)
 
@@ -638,11 +698,14 @@ function init (){
 
   }
 
+  function noScroll() {
+    window.scrollTo(0, 0);
+  }
 
 
  
   //!-------------------EVENT HANDLER--------------------------------------
-
+  window.addEventListener('scroll', noScroll)
   document.addEventListener('keyup', handleKeyUp)
   startButton.addEventListener('click', handleGameStart)
 
