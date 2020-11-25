@@ -12,10 +12,17 @@ function init (){
   let harryPosition = 180
   const harryClass = 'harry'
   let harryLives = 3
+  const startButton = document.querySelector('.start-button')
+  console.log(startButton)
+  const life1 = document.querySelector('.life1')
+  const life2 = document.querySelector('.life2')
+  const life3 = document.querySelector('.life3')
+  console.log(life1)
+  
   
   
   const voldemortClass = 'voldemort'
-  const gameTimer = null
+  let gameTimer = null
   
 
   //!-------------------FUNCTIONS--------------------------------------
@@ -191,6 +198,19 @@ function init (){
 
   }
   createGameBlocks()
+  function createBottomBlock(index){
+    cells[index].classList.add('block-bottom-side')
+    cells[index].setAttribute('data-id', 'block')
+  }
+
+  const foodArray = [15,16,17,18,19,20,21,22,23,24,25,26,29,33,36,40,43,47,50,54,57,61,64,68, 71, 72,73, 74, 79,80, 81,82,85,88,93,,96,99,102,103,104,105,106,107,110,111,112,113,114,115,116,117,120,121,122,123,124,127,131,134,138,141,145,148,152,155,159,162,166,169, 170, 171, 172, 173, 174, 175, 176, 177, 178,179,180]
+
+  foodArray.forEach(item =>{
+    cells[item].classList.add('food')
+  })
+
+
+
 
   //*------------------------------Harry Movement Logic------------------------------
 
@@ -250,23 +270,32 @@ function init (){
         if (horizontalPosition < width - 1 && cells[harryPosition + 1].dataset.id !== 'block') 
           harryPosition++
         flipHarry()
+        harryLosesLifeCheck()
+        checkAndUpdateHarrysLife()
+
         break
       case 37://*Move Left
         if (horizontalPosition > 0 && cells[harryPosition - 1].dataset.id !== 'block') 
           harryPosition--
         addHarry()
+        harryLosesLifeCheck()
+        checkAndUpdateHarrysLife()
+
         break
       case 38://*Move Up
         if (verticalPosition > 0 && cells[harryPosition - width].dataset.id !== 'block')
           harryPosition -= width
         rotateHarryUp()
+       harryLosesLifeCheck()
+       checkAndUpdateHarrysLife()
 
         break
       case 40://*Move down
         if (verticalPosition < width - 1 && cells[harryPosition + width].dataset.id !== 'block') 
           harryPosition += width
         rotateHarryDown()
-        
+        harryLosesLifeCheck()
+        checkAndUpdateHarrysLife()
         break
       default:
         console.log('invaild key')
@@ -330,7 +359,7 @@ function init (){
     if (timer){
       return
     }
-    let counter = 0
+    const counter = 0
     timer = setInterval(() => {
       removeVoldemorts(index)
       
@@ -360,8 +389,8 @@ function init (){
         }
       }
       addVoldemorts(index)
-      counter++
-      console.log(counter)
+     
+     
     }, 300)
   }
 
@@ -372,10 +401,10 @@ function init (){
       removeVoldemorts(index)
       if (cells[voldemorts[index].position + width].dataset.id !== 'block'){
         voldemorts[index].position += width
-        console.log('down')
+       
       } if (cells[voldemorts[index].position + 1].dataset.id !== 'block'){
         voldemorts[index].position++
-      // console.log('right')
+    
       }
       addVoldemorts(index)
     }, 400)
@@ -390,11 +419,11 @@ function init (){
       removeVoldemorts(index)
       if (cells[voldemorts[index].position + width].dataset.id !== 'block'){
         voldemorts[index].position += width
-        console.log('down')
+      
       } if (cells[voldemorts[index].position - 1].dataset.id !== 'block'){
-          voldemorts[index].position--
-          // console.log('left')
-        } 
+        voldemorts[index].position--
+        
+      } 
       addVoldemorts(index)
     }, 400)
     setTimeout(() =>{
@@ -403,9 +432,15 @@ function init (){
 
   }
 
+  //*Closes box holding voldemort ghosts
+  function closeHoldingBox(){
+    createBottomBlock(90)
+    createBottomBlock(91)
+  }
 
+  function handleGameStart(){
 
-  function startGame(){
+    addHarry(harryPosition)
 
     //*Moves GhostOne out and away from holding box
     moveOutRight(0)
@@ -419,7 +454,7 @@ function init (){
       moveVoldemort(1)
     }, 2000)
 
-//*Moves Ghost four out and away from holding box
+    //*Moves Ghost four out and away from holding box
     setTimeout(() => {
       moveOutRight(3)
       setTimeout(()=>{
@@ -427,85 +462,73 @@ function init (){
       }, 2000)
     }, 3000)
 
-//*Moves ghost three out and away from holding box
+    //*Moves ghost three out and away from holding box
     setTimeout(() => {
       moveOutLeft(2)
       setTimeout(()=>{
         moveVoldemort(2)
       }, 2000)
     }, 3000)
-    
-    }
-
   
+    //
+    setTimeout(() =>{
+      closeHoldingBox()
+  
+    }, 5000)
+    
+    if(gameTimer){
+      return
+    }
+    let counter = 0;
+    gameTimer = setInterval(() =>{
+      counter++
+      // console.log(counter)
+      checkAndUpdateHarrysLife()
+    }, 1000)
+
+  }
+
+ 
+
 
   //
-
-
-
-
-
-
-  startGame()
-
-
-  
-
-  
-  // setTimeout(() => {
-  //   moveVoldemort(1)
-  // }, 3000)
-
-  // setTimeout(() => {
-  //   moveVoldemort(2)
-  // }, 5000)
- 
-  // setTimeout(() => {
-  //   moveVoldemort(3)
-  // }, 3000)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   //*Moves harry back to original starting position and removes one life when Harry intersects with Voldemort
   function harryLosesLife(voldemortPosition){
     if (voldemortPosition === harryPosition){
+      life1.style.display = 'none'
       for (let i = 0; i < cells.length; i++){
         cells[i].classList.remove('harry')
         cells[i].classList.remove('flip-harry')
         cells[i].classList.remove('rotate-harry-up')
         cells[i].classList.remove('rotate-harry-down')
       }
-      harryPosition = 180
-      addHarry()
       harryLives -= 1
+      harryPosition = 180
+      
       console.log(harryLives)
     }
   }
  
+  function harryLosesLifeCheck(){
+    harryLosesLife(voldemorts[0].position)
+    harryLosesLife(voldemorts[1].position)
+    harryLosesLife(voldemorts[2].position)
+    harryLosesLife(voldemorts[3].position)
+  }
 
-
+  function checkAndUpdateHarrysLife(){
+   
+    
+    
+  }
 
 
  
   //!-------------------EVENT HANDLER--------------------------------------
 
   document.addEventListener('keyup', handleKeyUp)
+  startButton.addEventListener('click', handleGameStart)
 
 
 }

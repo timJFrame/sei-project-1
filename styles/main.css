@@ -6,14 +6,69 @@ body{
 	background-color: black;
 	display: flex;
 	flex-direction: column;
+	font-family: 'Princess Sofia', cursive;
 }
 
 
 header{
 	display: flex;
 	justify-content: center;
+	align-items: center;
+}
+
+main{
+	display: flex;
+	justify-content: center;
+	/* align-items: center; */
+}
+.game-options{
+display: flex;
+justify-content: center;
+margin-top: 50px;
+}
+
+.logo{
+	max-width: 100%;
+}
+
+.game-info{
+	display: flex;
+flex-direction: column;
+align-items: center;
+flex:1;
+margin-top: 50px;
+color: white;
+text-align: center;
+}
+
+.harry-lifes{
+	display: flex;
+	margin-top: 30px;
+}
+
+.life1, 
+.life2,
+.life3{
+	margin-top: 40px;
+	max-width: 30%;
+}
+
+
+.start-button{
+	align-self: center;
+	border: none;
+	margin-top: 20px;
+	background-color: #000066;
+	color: white;
+	padding: 10px 25px;
+	border-radius: 10px;
 
 }
+
+.game-options{
+flex:1;
+}
+
 
 
 .grid-wrapper {
@@ -21,6 +76,7 @@ header{
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	flex: 3;
 }
 
 .grid {
@@ -34,12 +90,21 @@ header{
 }
 
 .grid div{
-	color: white;
-	 border: 1px solid rgba(255,255,255, 0.3); 
+	/* color: white;
+	 border: 1px solid rgba(255,255,255, 0.3);  */
 	flex-grow: 1;
 	height: 7.14%;
 	width: 7.14%;
 }
+
+.food{
+background-image: url('../images/characters/food.gif');
+background-repeat: none;
+background-attachment: contain;
+}
+
+
+
 
 .harry{
 	background-image: url('../images/characters/harrry.gif');
