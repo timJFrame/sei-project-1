@@ -6,7 +6,7 @@ body{
 	background-color: black;
 	display: flex;
 	flex-direction: column;
-	font-family: 'Princess Sofia', cursive;
+	font-family: 'Courgette', cursive;
 }
 
 
@@ -36,7 +36,7 @@ main{
 		align-items: center;
 		text-align: center;
 		padding: 0px 40px;
-		color: white;
+		color: #f3ece7;
 	}
 	
 
@@ -79,7 +79,7 @@ text-align: center;
 	color: white;
 	padding: 10px 25px;
 	border-radius: 10px;
-
+	font-family: font-family: 'New Rocker', cursive;;
 }
 
 .harry-lifes{
@@ -177,8 +177,8 @@ background-attachment: contain;
 	background-size: contain;
 }
 
-.special-voldermort{
-	background-image: url('../images/characters/red_voldemort.png');
+.special-ghost{
+	background-image: url('../images/characters/voldemort.gif');
 	background-repeat: none;
 	background-size: contain;
 }

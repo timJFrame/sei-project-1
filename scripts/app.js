@@ -28,7 +28,8 @@ function init (){
   const voldemortClass = 'voldemort'
  
   
-  
+  let didHarryEatSpecialFood = 'no'
+  let isGameStarted = 'no'
   
   
   const voldermortOneTimer = null
@@ -52,6 +53,7 @@ function init (){
     }
   }
 
+  //*Running function to create grid
   createGameGrid()
 
  
@@ -88,142 +90,78 @@ function init (){
     cells[195].setAttribute('data-id', 'block')
   }
 
+  //*Running function to create border
   createGameBorder()
 
   //*Creates Blocks for Game
   function createGameBlocks(){
+    //*Builds bottom left corner blocks
+    const bottomLeftCornerBlockArray = [58, 65, 62, 89, 100, 108, 156, 163, 160]
+    bottomLeftCornerBlockArray.forEach(item =>{
+      cells[item].classList.add('block-bottom-left-corner')
+      cells[item].setAttribute('data-id', 'block')
+    })
+    //*Builds bottom right corner blocks
+    const rightBottomCornerArray = [60, 67, 63, 92, 109, 158, 165, 161, 101]
+    rightBottomCornerArray.forEach(item => {
+      cells[item].classList.add('block-bottom-right-corner')
+      cells[item].setAttribute('data-id', 'block')
+    })
 
-    function createBottomLeftCorner(index){
-      cells[index].classList.add('block-bottom-left-corner')
-      cells[index].setAttribute('data-id', 'block')
-    }
+    //*Builds top left corner blocks
+    const topLeftCornerArray = [30, 37, 34, 86, 94, 128, 135, 118, 75 ]
+    topLeftCornerArray.forEach(item => {
+      cells[item].classList.add('block-top-left-corner')
+      cells[item].setAttribute('data-id', 'block')
+    })
 
-    function createBottomRightCorner(index){
-      cells[index].classList.add('block-bottom-right-corner')
-      cells[index].setAttribute('data-id', 'block')
-    }
+    //*Builds top right corner blocks
+    const topRightCornerArray = [32, 39, 35, 78, 87, 130, 137, 119, 95]
+    topRightCornerArray.forEach(item => {
+      cells[item].classList.add('block-top-right-corner')
+      cells[item].setAttribute('data-id', 'block')
+    })
 
-    function createTopLeftCorner(index){
-      cells[index].classList.add('block-top-left-corner')
-      cells[index].setAttribute('data-id', 'block')
-    }
-		
-    function createTopRightCorner(index){
-      cells[index].classList.add('block-top-right-corner')
-      cells[index].setAttribute('data-id', 'block')
-    }
+    //* Builds top blocks
+    const topBlockArray = [31, 38, 129, 136]
+    topBlockArray.forEach(item => {
+      cells[item].classList.add('block-top-side')
+      cells[item].setAttribute('data-id', 'block')
+    })
 
-    function createTopBlock(index){
-      cells[index].classList.add('block-top-side')
-      cells[index].setAttribute('data-id', 'block')
-    }
+    //*Builds bottom blocks
+    const bottomBlockArray = [59, 66, 157, 164]
+    bottomBlockArray.forEach(item =>{
+      cells[item].classList.add('block-bottom-side')
+      cells[item].setAttribute('data-id', 'block')
+    })
 
-    function createBottomBlock(index){
-      cells[index].classList.add('block-bottom-side')
-      cells[index].setAttribute('data-id', 'block')
-    }
+    //*Build right blocks
+    const rightBlockArray = [46, 53, 49, 144, 151, 133, 147]
+    rightBlockArray.forEach(item =>{
+      cells[item].classList.add('block-right-side')
+      cells[item].setAttribute('data-id', 'block')
+    })
 
-    function createLeftBlock(index){
-      cells[index].classList.add('block-left-side')
-      cells[index].setAttribute('data-id', 'block')
-    }
-
-    function createRightBloc(index){
-      cells[index].classList.add('block-right-side')
-      cells[index].setAttribute('data-id', 'block')
-    }
-
-    //*Top left Block
-    createTopBlock(31)
-    createTopLeftCorner(30)
-    createTopRightCorner(32)
-    createBottomLeftCorner(58)
-    createBottomRightCorner(60)
-    createLeftBlock(44)
-    createRightBloc(46)
-    createBottomBlock(59)
-    createBottomRightCorner(67)
-
-    //*Top Right Block
-    createTopBlock(38)
-    createTopRightCorner(39)
-    createTopLeftCorner(37)
-    createRightBloc(53)
-    createLeftBlock(51)
-    createBottomBlock(66)
-    createBottomLeftCorner(65)
-
-    //*Center Block Top Block
-    createTopLeftCorner(34)
-    createTopRightCorner(35)
-    createLeftBlock(48)
-    createRightBloc(49)
-    createBottomLeftCorner(62)
-    createBottomRightCorner(63)
-
-	
-    createTopLeftCorner(75)
-    createTopRightCorner(78)
-    createBottomLeftCorner(89)
-    createBottomRightCorner(92)
-		
-    //*Middle Left Block
-    createTopLeftCorner(86)
-    createTopRightCorner(87)
-    createBottomLeftCorner(100)
-    createBottomRightCorner(101)
-
-    //*Middle Right Block
-    createTopLeftCorner(94)
-    createTopRightCorner(95)
-    createBottomLeftCorner(108)
-    createBottomRightCorner(109)
-
-    //*Bottom Left Block
-    createTopBlock(129)
-    createTopLeftCorner(128)
-    createTopRightCorner(130)
-    createLeftBlock(142)
-    createRightBloc(144)
-    createBottomBlock(157)
-    createBottomLeftCorner(156)
-    createBottomRightCorner(158)
-		
-    //*Bottom Right Block
-    createTopBlock(136)
-    createTopLeftCorner(135)
-    createTopRightCorner(137)
-    createLeftBlock(149)
-    createRightBloc(151)
-    createBottomBlock(164)
-    createBottomLeftCorner(163)
-    createBottomRightCorner(165)
-	
-    //* Center Bottom Block
-    createTopLeftCorner(118)
-    createTopRightCorner(119)
-    createLeftBlock(132)
-    createRightBloc(133)
-    createLeftBlock(146)
-    createRightBloc(147)
-    createBottomLeftCorner(160)
-    createBottomRightCorner(161)
-
+    //*Builds left blocks
+    const leftBlockArray = [44, 48, 51, 132, 142, 146, 149]
+    leftBlockArray.forEach(item => {
+      cells[item].classList.add('block-left-side')
+      cells[item].setAttribute('data-id', 'block')
+    })
   }
+
+  //*Running function to create blocks
   createGameBlocks()
-  function createBottomBlock(index){
-    cells[index].classList.add('block-bottom-side')
-    cells[index].setAttribute('data-id', 'block')
-  }
-
+ 
+  //*Creates purple food for game
   const foodArray = [15,16,17,18,19,21,22,23,24,25,26,29,33,36,40,43,47,50,54,57,61,64,68, 71,72,73, 74, 79,80, 81,82,85,88,93,96,102,103,104,105,106,107,113,114,115,116,117,120,121,122,123,124,127,131,134,138,141,145,148,152,155,159,162,166,169, 170, 171, 172, 173,175, 176, 177, 178,179,180]
-
   foodArray.forEach(item =>{
     cells[item].classList.add('food')
   })
 
+  //*Creates green food for game
   const specialFoodArray = [99,110,20,174]
-
   specialFoodArray.forEach(item =>{
     cells[item].classList.add('power-up')
   })
@@ -271,57 +209,65 @@ function init (){
     cells[harryPosition].classList.remove('rotate-harry-down')
   }
 
-  //*Handles harrys movement when a player uses an arrow key
+  //*Handles harrys movement when a player uses an arrow key and only runs when start button is clicked
   function handleKeyUp(e){
-    removeHarry()
-    removeFlipHarry()
-    removeRotateHarryUp()
-    removeRotateHarryDown()
+    if (isGameStarted === 'yes'){
+
+      removeHarry()
+      removeFlipHarry()
+      removeRotateHarryUp()
+      removeRotateHarryDown()
     
-    const horizontalPosition = harryPosition % width
-    const verticalPosition = Math.floor(harryPosition / width)
+      const horizontalPosition = harryPosition % width
+      const verticalPosition = Math.floor(harryPosition / width)
 
 		
-    switch (e.keyCode){
-      case 39: //*Move Right
-        if (horizontalPosition < width - 1 && cells[harryPosition + 1].dataset.id !== 'block') 
-          harryPosition++
-        flipHarry()
-        harryLosesLife()
-        harryEatsFood()
-        harryEatsSpecialFood()
-        break
-      case 37://*Move Left
-        if (horizontalPosition > 0 && cells[harryPosition - 1].dataset.id !== 'block') 
-          harryPosition--
-        addHarry()
-        harryLosesLife()
-        harryEatsFood()
-        harryEatsSpecialFood()
-        break
-      case 38://*Move Up
-        if (verticalPosition > 0 && cells[harryPosition - width].dataset.id !== 'block')
-          harryPosition -= width
-        rotateHarryUp()
-        harryLosesLife()
-        harryEatsFood()
-        harryEatsSpecialFood()
-        break
-      case 40://*Move down
-        if (verticalPosition < width - 1 && cells[harryPosition + width].dataset.id !== 'block') 
-          harryPosition += width
-        rotateHarryDown()
-        harryLosesLife()
-        harryEatsFood()
-        harryEatsSpecialFood()
-        break
-      default:
-        console.log('invaild key')
-    } 
-    //
+      switch (e.keyCode){
+        case 39: //*Move Right
+          if (horizontalPosition < width - 1 && cells[harryPosition + 1].dataset.id !== 'block') 
+            harryPosition++
+          flipHarry()
+          harryLosesLife()
+          harryEatsFood()
+          harryEatsSpecialFood()
+          
+          break
+        case 37://*Move Left
+          if (horizontalPosition > 0 && cells[harryPosition - 1].dataset.id !== 'block') 
+            harryPosition--
+          addHarry()
+          harryLosesLife()
+          harryEatsFood()
+          harryEatsSpecialFood()
+          
+          break
+        case 38://*Move Up
+          if (verticalPosition > 0 && cells[harryPosition - width].dataset.id !== 'block')
+            harryPosition -= width
+          rotateHarryUp()
+          harryLosesLife()
+          harryEatsFood()
+          harryEatsSpecialFood()
+          
+          break
+        case 40://*Move down
+          if (verticalPosition < width - 1 && cells[harryPosition + width].dataset.id !== 'block') 
+            harryPosition += width
+          rotateHarryDown()
+          harryLosesLife()
+          harryEatsFood()
+          harryEatsSpecialFood()
+          c
+          break
+        default:
+          console.log('invaild key')
+      } 
+      //
    
-    addHarry()
+      addHarry()
+    }
   }
+  
 
   //*----------------------------------Voldemort Movement Logic----------------------------
 
@@ -330,26 +276,26 @@ function init (){
     {
       name: 'voldemortOne',
       position: 90,
-      lengthOfTimer: 500,
+     
     },
     {
       name: 'voldemortTwo',
       position: 91,
-      lengthOfTimer: 500,
+      
     },
     {
       name: 'voldemortThree',
       position: 76,
-      lengthOfTimer: 500,
+      
     },
     {
       name: 'voldemortFour',
       position: 77,
-      lengthOfTimer: 500,
+      
     }
   ]
   
-  //*Add Voldemort ghost to page
+  //*Adds Voldemort ghost to page
   function addVoldemorts(index){
     cells[voldemorts[index].position].classList.add(voldemortClass)
   }
@@ -359,9 +305,16 @@ function init (){
     cells[voldemorts[index].position].classList.remove(voldemortClass)
   }
 
-
-  //*Adding Voldemort Ghosts to the page
+  //*Adds Special Voldemort ghost to page
+  function addSpecialVoldemorts(index){
+    cells[voldemorts[index].position].classList.add('special-ghost')
+  }
   
+  //*Removes Special voldermort from pages
+  function removeSpecialVoldemorts(index){
+    cells[voldemorts[index].position].classList.remove('special-ghost')
+  }
+ 
   //*Array used in if statement to move voldemort ghosts
   const voldemortMovements = ['left', 'right', 'up', 'down']
 
@@ -370,49 +323,57 @@ function init (){
     return voldemortMovements[Math.floor(Math.random() * voldemortMovements.length)]
   }
 
-
   //*moveVoldemort controls the random movement of the voldemort ghosts using setInterval timer
   function moveVoldemort(index, timer){
+    
     if (timer){
       return
     }
-    const counter = 0
+   
+    //*Tests if harry has eaten green food if so sets class to special ghost
     timer = setInterval(() => {
-      removeVoldemorts(index)
+      if (didHarryEatSpecialFood === 'yes'){
+        removeSpecialVoldemorts(index)
+        removeVoldemorts(index)
+      } else if (didHarryEatSpecialFood === 'no') {
+        removeSpecialVoldemorts(index)
+        removeVoldemorts(index)
+      }
+      
       
       if (randomiseVoldemortMovements() === 'left'){
         //*Move Left
         if (cells[voldemorts[index].position - 1].dataset.id !== 'block'){
           voldemorts[index].position--
-          // console.log('left')
         } 
         //*Move Right
       } else if (randomiseVoldemortMovements() === 'right'){
         if (cells[voldemorts[index].position + 1].dataset.id !== 'block'){
           voldemorts[index].position++
-          // console.log('right')
         }
         //*Move Up
       } else if (randomiseVoldemortMovements() === 'up'){
         if (cells[voldemorts[index].position - width].dataset.id !== 'block'){
           voldemorts[index].position -= width
-          // console.log('up')
-
         }//*Move Down
       } else if (randomiseVoldemortMovements() === 'down'){
-        if (cells[voldemorts[index].position + width].dataset.id !== 'block'){
+        if (cells[voldemorts[index].position + width].dataset.id !== 'block'){  
           voldemorts[index].position += width
-          // console.log('down')
         }
       }
 
+      //*Checks to see if game is over and ends timer
       if (isGameOverPlayerLost === 'yes' || isGameOverPlayerWon === 'yes'){
         console.dir(timer)
         stopTimer(timer)
         
       }
 
-      addVoldemorts(index)
+      if (didHarryEatSpecialFood === 'yes'){
+        addSpecialVoldemorts(index)
+      } else if (didHarryEatSpecialFood === 'no') {
+        addVoldemorts(index)
+      }
     }, 300)
    
   }
@@ -422,25 +383,34 @@ function init (){
     clearInterval(timer)
   }
 
-
+  //*Functions tracks harrys movement
   function voldemortTrackingFunction(index, horzintalDistance, verticalDistance){
+
+    const horizontalPosition = voldemorts[index].position % width
+    const verticalPosition = Math.floor(voldemorts[index].position / width)
+
+
     removeVoldemorts(index)
     //*Search left
     if (cells[voldemorts[index].position - horzintalDistance].className.includes('harry')){
       voldemorts[index].position--
       console.log('search left')
+      console.log(horizontalPosition)
     //*Seach Right
     } else if (cells[voldemorts[index].position + horzintalDistance].className.includes('harry')){
       voldemorts[index].position++
       console.log('seach right')
+      console.log(horizontalPosition)
     //* Search Up
     } else if (cells[voldemorts[index].position - verticalDistance].className.includes('harry')){
       voldemorts[index].position -= width
       console.log('search up')
+      console.log(verticalPosition)
     //*Searches Down
     } else if (cells[voldemorts[index].position + verticalDistance].className.includes('harry')){
       voldemorts[index].position += width
       console.log('search down')
+      console.log(verticalPosition)
     }
     addVoldemorts(index)
   }
@@ -463,7 +433,7 @@ function init (){
     }, 3000)  
   }
 
-//*Moves voldemorts ghost out of holding box to the of the page
+  //*Moves voldemorts ghost out of holding box to the of the page
   function moveOutLeft(index){
     const timer = setInterval(()=> {
       removeVoldemorts(index)
@@ -478,14 +448,14 @@ function init (){
     }, 400)
     setTimeout(() =>{
       clearInterval(timer)
-    }, 3000)  
+    }, 2000)  
 
   }
 
   //*Closes box holding voldemort ghosts
   function closeHoldingBox(){
-    createBottomBlock(90)
-    createBottomBlock(91)
+    cells[90].classList.add('block-bottom-side')
+    cells[91].classList.add('block-bottom-side')
   }
 
   function removeHoldingBox(){
@@ -496,11 +466,9 @@ function init (){
 
   //**---------------------------------Harry life and Eating Functions------------------------- */
 
-
-
-
   //*Moves harry back to original starting position and removes one life when Harry intersects with Voldemort
   function harryLosesLife(){
+    
     if (cells[harryPosition].className.includes('voldemort')){
       
       for (let i = 0; i < cells.length; i++){
@@ -520,14 +488,12 @@ function init (){
         alert('You lost!!! You\'re all out of lives')
         isGameOverPlayerLost = 'yes'
       }
-
-     
       console.log('loses life functtion' + harryLives)
     }
+    
   }
 
-
-
+  
   function harryLosesLifeFromVoldemortsView(index){
     if (cells[voldemorts[index].position].className.includes('harry')){
       
@@ -569,7 +535,6 @@ function init (){
     }
   }
   //*Function Runs when harry eats special food
-
   function harryEatsSpecialFood(){
     if (cells[harryPosition].className.includes('power-up')){
       removeHoldingBox()
@@ -582,15 +547,28 @@ function init (){
         console.log('met')
         alert('Congraduations You won!!!!')
       }
+      didHarryEatSpecialFood = 'yes'
+      console.log(didHarryEatSpecialFood)
+
     }
   }
 
- gamesound.src = 'https://ia801309.us.archive.org/28/items/HarryPotter-hedwigTheme/Harry_Potter_Theme_Song_Hedwigs_Theme.ogg'
+  function removeSpecialVoldemortClass(){
+    if (didHarryEatSpecialFood === 'yes'){
+      setTimeout(()=> {
+        didHarryEatSpecialFood = 'no'
+      }, 9000)
+    }
+  }
+
+  //*Sets the source for background music
+  gamesound.src = 'https://ia801309.us.archive.org/28/items/HarryPotter-hedwigTheme/Harry_Potter_Theme_Song_Hedwigs_Theme.ogg'
 
   //*------------------------------------Start game and End game functions----------------------------------
 
   function handleGameStart(){
 
+    isGameStarted = 'yes'
     addHarry(harryPosition)
 
     gamesound.play()
@@ -645,11 +623,13 @@ function init (){
         console.log('condition meet')
         gameOver()
       }
-  
-      harryLosesLifeFromVoldemortsView(0)
-      harryLosesLifeFromVoldemortsView(1)
-      harryLosesLifeFromVoldemortsView(2)
-      harryLosesLifeFromVoldemortsView(3)
+      
+      
+      removeSpecialVoldemortClass()
+
+     
+
+      
 
       //*Searches 1 div radius for harry
       voldemortTrackingFunction(0, 1, 14)
