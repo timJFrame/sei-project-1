@@ -10,8 +10,11 @@ function init (){
   const playerScoreString = document.querySelector('.player-score')
   const startButton = document.querySelector('.start-button')
   const gamesound = document.querySelector('audio')
+  const mainPageContent = document.querySelector('main')
+  const landingPageButton = document.querySelector('.landing-page-button')
+  const landingPageDiv = document.querySelector('.landing-page')
 
-  console.log(gamesound)
+  
 
 
   //*Game variable
@@ -40,6 +43,21 @@ function init (){
   
 
   //!-------------------FUNCTIONS--------------------------------------
+
+
+  //*Landing page 
+
+  mainPageContent.style.display = 'none'
+
+  function handleShowGameClick(){
+    gamesound.src = '../audio/good-luck.wav'
+    gamesound.play()
+    mainPageContent.style.display = 'flex'
+    landingPageDiv.style.display = 'none'
+  }
+
+
+
 
   //*Board Functions
 	
@@ -212,6 +230,7 @@ function init (){
   //*Handles harrys movement when a player uses an arrow key and only runs when start button is clicked
   function handleKeyUp(e){
     if (isGameStarted === 'yes'){
+      
 
       removeHarry()
       removeFlipHarry()
@@ -261,11 +280,13 @@ function init (){
           break
         default:
           console.log('invaild key')
+     
       } 
       //
    
       addHarry()
     }
+    
   }
   
 
@@ -343,29 +364,33 @@ function init (){
       
       if (randomiseVoldemortMovements() === 'left'){
         //*Move Left
-        if (didHarryEatSpecialFood === 'yes'){
-          voldemorts[index].position
-        } else if (cells[voldemorts[index].position - 1].dataset.id !== 'block'){
+        // if (didHarryEatSpecialFood === 'yes'){
+        //   voldemorts[index].position
+        // } else 
+        if (cells[voldemorts[index].position - 1].dataset.id !== 'block'){
           voldemorts[index].position--
         } 
         //*Move Right
       } else if (randomiseVoldemortMovements() === 'right'){
-        if (didHarryEatSpecialFood === 'yes'){
-          voldemorts[index].position
-        } else if (cells[voldemorts[index].position + 1].dataset.id !== 'block'){
+        // if (didHarryEatSpecialFood === 'yes'){
+        //   voldemorts[index].position
+        // } else
+        if (cells[voldemorts[index].position + 1].dataset.id !== 'block'){
           voldemorts[index].position++
         }
         //*Move Up
       } else if (randomiseVoldemortMovements() === 'up'){
-        if (didHarryEatSpecialFood === 'yes'){
-          voldemorts[index].position
-        } else if (cells[voldemorts[index].position - width].dataset.id !== 'block'){
+        // if (didHarryEatSpecialFood === 'yes'){
+        //   voldemorts[index].position
+        // } else 
+        if (cells[voldemorts[index].position - width].dataset.id !== 'block'){
           voldemorts[index].position -= width
         }//*Move Down
       } else if (randomiseVoldemortMovements() === 'down'){
-        if (didHarryEatSpecialFood === 'yes'){
-          voldemorts[index].position
-        } else if (cells[voldemorts[index].position + width].dataset.id !== 'block'){  
+        // if (didHarryEatSpecialFood === 'yes'){
+        //   voldemorts[index].position
+        // } else 
+        if (cells[voldemorts[index].position + width].dataset.id !== 'block'){  
           voldemorts[index].position += width
         }
       }
@@ -394,14 +419,13 @@ function init (){
   //*Functions tracks harrys movement
   function voldemortTrackingFunction(index, horzintalDistance, verticalDistance){
 
-
     removeVoldemorts(index)
     //*Search left
     if (cells[voldemorts[index].position - horzintalDistance].className.includes('harry')){
       voldemorts[index].position--
       console.log('search left')
       
-    //*Seach Right
+    //*Search Right
     } else if (cells[voldemorts[index].position + horzintalDistance].className.includes('harry')){
       voldemorts[index].position++
       console.log('seach right')
@@ -435,7 +459,7 @@ function init (){
     }, 400)
     setTimeout(() =>{
       clearInterval(timer)
-    }, 3000)  
+    }, 1500)  
   }
 
   //*Moves voldemorts ghost out of holding box to the of the page
@@ -453,7 +477,7 @@ function init (){
     }, 400)
     setTimeout(() =>{
       clearInterval(timer)
-    }, 2000)  
+    }, 1500)  
 
   }
 
@@ -484,6 +508,7 @@ function init (){
       }
       harryLives -= 1
       harryPosition = 180
+      addHarry()
       if (harryLives === 2){
         life1.style.display = 'none'
       } else if (harryLives === 1){
@@ -510,6 +535,7 @@ function init (){
       }
       harryLives -= 1
       harryPosition = 180
+      addHarry()
       if (harryLives === 2){
         life1.style.display = 'none'
       } else if (harryLives === 1){
@@ -570,19 +596,27 @@ function init (){
     if (didHarryEatSpecialFood === 'yes'){
       didHarryEatSpecialFoodDelayTimer = setTimeout(()=> {
         didHarryEatSpecialFood = 'no'
-      }, 12000)
+      }, 9000)
+      didHarryEatSpecialFoodDelayTimer = null
+      console.log(didHarryEatSpecialFood)
     }
   }
 
-  //*Sets the source for background music
-  gamesound.src = 'https://ia801309.us.archive.org/28/items/HarryPotter-hedwigTheme/Harry_Potter_Theme_Song_Hedwigs_Theme.ogg'
+  
 
   //*------------------------------------Start game and End game functions----------------------------------
 
   function handleGameStart(){
 
-    isGameStarted = 'yes'
+
+    setTimeout(() =>{
+      isGameStarted = 'yes'
+    }, 2500)  
+
     addHarry(harryPosition)
+
+    //*Sets the source for background music
+    gamesound.src = 'https://ia801309.us.archive.org/28/items/HarryPotter-hedwigTheme/Harry_Potter_Theme_Song_Hedwigs_Theme.ogg'
 
     gamesound.play()
   
@@ -591,14 +625,14 @@ function init (){
     setTimeout(()=>{
       moveVoldemort(0, voldermortOneTimer)
       
-    }, 2000)
+    }, 1500)
 
     //*Moves Ghost Two out and away from holding box
     moveOutLeft(1)
     setTimeout(()=>{
       moveVoldemort(1, voldermortTwoTimer)
       
-    }, 2000)
+    }, 1500)
 
     //*Moves Ghost four out and away from holding box
     setTimeout(() => {
@@ -622,7 +656,7 @@ function init (){
     //*Closes box that holds voldemort
     setTimeout(() =>{
       closeHoldingBox()
-    }, 5000)
+    }, 3000)
     
 
     if (gameTimer){
@@ -631,25 +665,29 @@ function init (){
 
     gameTimer = setInterval(() =>{
 
-      //*Tests if either the player or computer has won and reloads browser in either event
-      if (isGameOverPlayerLost === 'yes' || isGameOverPlayerWon === 'yes'){
-        console.log('condition meet')
-        gameOver()
-      }
       
+
+      harryEatsVoldemort(0, 90)
+      harryEatsVoldemort(1, 91)
+      harryEatsVoldemort(2, 76)
+      harryEatsVoldemort(3, 77)
+
+     
+      
+      //*Sets a 9 second window where voldemort can be eaten by harry
       removeSpecialVoldemortClass()
 
       //*Searches 1 div radius for harry
-
       if (didHarryEatSpecialFood === 'no'){
         voldemortTrackingFunction(0, 1, 14)
         voldemortTrackingFunction(1, 1, 14)
         voldemortTrackingFunction(2, 1, 14)
         voldemortTrackingFunction(3, 1, 14)
         console.log('tracking 1 div running')
-        didHarryEatSpecialFoodDelayTimer = null
+        console
       }
       
+      startButton.style.display = 'none'
 
       // //*Searches 2 div radius for harry
       // if (didHarryEatSpecialFood === 'no'){
@@ -673,16 +711,17 @@ function init (){
       // voldemortTrackingFunction(3, 4, 56)
    
       if (didHarryEatSpecialFood === 'no'){
-      harryLosesLifeFromVoldemortsView(0)
-      harryLosesLifeFromVoldemortsView(1)
-      harryLosesLifeFromVoldemortsView(2)
-      harryLosesLifeFromVoldemortsView(3)
+        harryLosesLifeFromVoldemortsView(0)
+        harryLosesLifeFromVoldemortsView(1)
+        harryLosesLifeFromVoldemortsView(2)
+        harryLosesLifeFromVoldemortsView(3)
       }
 
-      harryEatsVoldemort(0, 90)
-      harryEatsVoldemort(1, 91)
-      harryEatsVoldemort(2, 76)
-      harryEatsVoldemort(3, 77)
+      //*Tests if either the player or computer has won and reloads browser in either event
+      if (isGameOverPlayerLost === 'yes' || isGameOverPlayerWon === 'yes'){
+        console.log('condition meet')
+        gameOver()
+      }
 
     
      
@@ -705,8 +744,9 @@ function init (){
  
   //!-------------------EVENT HANDLER--------------------------------------
   window.addEventListener('scroll', noScroll)
-  document.addEventListener('keyup', handleKeyUp)
+  document.addEventListener('keydown', handleKeyUp)
   startButton.addEventListener('click', handleGameStart)
+  landingPageButton.addEventListener('click', handleShowGameClick)
 
 
 }
