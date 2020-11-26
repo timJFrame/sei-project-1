@@ -30,7 +30,7 @@ function init (){
   
   let didHarryEatSpecialFood = 'no'
   let isGameStarted = 'no'
-  
+  let didHarryEatSpecialFoodDelayTimer = null
   
   const voldermortOneTimer = null
   const voldermortTwoTimer = null
@@ -257,7 +257,7 @@ function init (){
           harryLosesLife()
           harryEatsFood()
           harryEatsSpecialFood()
-          c
+          
           break
         default:
           console.log('invaild key')
@@ -343,21 +343,29 @@ function init (){
       
       if (randomiseVoldemortMovements() === 'left'){
         //*Move Left
-        if (cells[voldemorts[index].position - 1].dataset.id !== 'block'){
+        if (didHarryEatSpecialFood === 'yes'){
+          voldemorts[index].position
+        } else if (cells[voldemorts[index].position - 1].dataset.id !== 'block'){
           voldemorts[index].position--
         } 
         //*Move Right
       } else if (randomiseVoldemortMovements() === 'right'){
-        if (cells[voldemorts[index].position + 1].dataset.id !== 'block'){
+        if (didHarryEatSpecialFood === 'yes'){
+          voldemorts[index].position
+        } else if (cells[voldemorts[index].position + 1].dataset.id !== 'block'){
           voldemorts[index].position++
         }
         //*Move Up
       } else if (randomiseVoldemortMovements() === 'up'){
-        if (cells[voldemorts[index].position - width].dataset.id !== 'block'){
+        if (didHarryEatSpecialFood === 'yes'){
+          voldemorts[index].position
+        } else if (cells[voldemorts[index].position - width].dataset.id !== 'block'){
           voldemorts[index].position -= width
         }//*Move Down
       } else if (randomiseVoldemortMovements() === 'down'){
-        if (cells[voldemorts[index].position + width].dataset.id !== 'block'){  
+        if (didHarryEatSpecialFood === 'yes'){
+          voldemorts[index].position
+        } else if (cells[voldemorts[index].position + width].dataset.id !== 'block'){  
           voldemorts[index].position += width
         }
       }
@@ -386,31 +394,28 @@ function init (){
   //*Functions tracks harrys movement
   function voldemortTrackingFunction(index, horzintalDistance, verticalDistance){
 
-    const horizontalPosition = voldemorts[index].position % width
-    const verticalPosition = Math.floor(voldemorts[index].position / width)
-
 
     removeVoldemorts(index)
     //*Search left
     if (cells[voldemorts[index].position - horzintalDistance].className.includes('harry')){
       voldemorts[index].position--
       console.log('search left')
-      console.log(horizontalPosition)
+      
     //*Seach Right
     } else if (cells[voldemorts[index].position + horzintalDistance].className.includes('harry')){
       voldemorts[index].position++
       console.log('seach right')
-      console.log(horizontalPosition)
+      
     //* Search Up
     } else if (cells[voldemorts[index].position - verticalDistance].className.includes('harry')){
       voldemorts[index].position -= width
       console.log('search up')
-      console.log(verticalPosition)
+      
     //*Searches Down
     } else if (cells[voldemorts[index].position + verticalDistance].className.includes('harry')){
       voldemorts[index].position += width
       console.log('search down')
-      console.log(verticalPosition)
+     
     }
     addVoldemorts(index)
   }
@@ -525,11 +530,11 @@ function init (){
     if (cells[harryPosition].className.includes('food')){
       cells[harryPosition].classList.remove('food')
       playerScore += 5
-      console.log(playerScore)
+     
       playerScoreString.innerHTML = `Score: ${playerScore}`
       if (playerScore > 449){
         isGameOverPlayerWon = 'yes'
-        console.log('met')
+       
         alert('Congraduations You won!!!!')
       }
     }
@@ -553,11 +558,19 @@ function init (){
     }
   }
 
+  function harryEatsVoldemort(index, newPosition){
+    if (cells[harryPosition].className.includes('special-ghost')){
+      removeSpecialVoldemorts(index)
+      voldemorts[index].position = newPosition
+      addSpecialVoldemorts(index)
+    }
+  }
+
   function removeSpecialVoldemortClass(){
     if (didHarryEatSpecialFood === 'yes'){
-      setTimeout(()=> {
+      didHarryEatSpecialFoodDelayTimer = setTimeout(()=> {
         didHarryEatSpecialFood = 'no'
-      }, 9000)
+      }, 12000)
     }
   }
 
@@ -624,24 +637,28 @@ function init (){
         gameOver()
       }
       
-      
       removeSpecialVoldemortClass()
 
-     
+      //*Searches 1 div radius for harry
 
+      if (didHarryEatSpecialFood === 'no'){
+        voldemortTrackingFunction(0, 1, 14)
+        voldemortTrackingFunction(1, 1, 14)
+        voldemortTrackingFunction(2, 1, 14)
+        voldemortTrackingFunction(3, 1, 14)
+        console.log('tracking 1 div running')
+        didHarryEatSpecialFoodDelayTimer = null
+      }
       
 
-      //*Searches 1 div radius for harry
-      voldemortTrackingFunction(0, 1, 14)
-      voldemortTrackingFunction(1, 1, 14)
-      voldemortTrackingFunction(2, 1, 14)
-      voldemortTrackingFunction(3, 1, 14)
-
       // //*Searches 2 div radius for harry
-      // voldemortTrackingFunction(0, 2, 28)
-      // voldemortTrackingFunction(1, 2, 28)
-      // voldemortTrackingFunction(2, 2, 28)
-      // voldemortTrackingFunction(3, 2, 28)
+      // if (didHarryEatSpecialFood === 'no'){
+      //   voldemortTrackingFunction(0, 2, 28)
+      //   voldemortTrackingFunction(1, 2, 28)
+      //   voldemortTrackingFunction(2, 2, 28)
+      //   voldemortTrackingFunction(3, 2, 28)
+      //   console.log('tracking 2 divs running')
+      // }
 
       // //*Searches 3 div radius for harry
       // voldemortTrackingFunction(0, 3, 42)
@@ -655,12 +672,17 @@ function init (){
       // voldemortTrackingFunction(2, 4, 56)
       // voldemortTrackingFunction(3, 4, 56)
    
+      if (didHarryEatSpecialFood === 'no'){
       harryLosesLifeFromVoldemortsView(0)
       harryLosesLifeFromVoldemortsView(1)
       harryLosesLifeFromVoldemortsView(2)
       harryLosesLifeFromVoldemortsView(3)
+      }
 
-
+      harryEatsVoldemort(0, 90)
+      harryEatsVoldemort(1, 91)
+      harryEatsVoldemort(2, 76)
+      harryEatsVoldemort(3, 77)
 
     
      
