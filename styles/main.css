@@ -92,7 +92,7 @@ text-align: center;
 .start-button{
 	align-self: center;
 	border: none;
-	margin-top: 20px;
+	margin-top: 40px;
 	margin-right:50px;
 	background-color: #000066;
 	color: #f4f0db;
@@ -101,20 +101,8 @@ text-align: center;
 	font-family: 'Xanh Mono', monospace;
 }
 
-.harry-lifes{
-	display: flex;
-	margin-top: 30px;
-}
-
-.life1, 
-.life2,
-.life3{
-	margin-top: 40px;
-	max-width: 25%;
-}
-
-.token{
-	max-width: 10%;
+.score{
+margin: 25px 0 15px 0;
 }
 
 .player-score{
@@ -124,13 +112,34 @@ text-align: center;
 	margin-top: 30px;
 }
 
+
+.harry-lifes{
+	display: flex;
+	margin-top: 30px;
+}
+
+
+
+.token{
+	max-width: 10%;
+}
+
+
 .game-tokens{
 	display: flex;
 	flex-direction: column;
-	margin-right: 35px;
+	margin: 20px 35px 0px 20px;
+	
+
 	align-items: center;
 }
 
+.life1, 
+.life2,
+.life3{
+	margin-top: 50px;
+	max-width: 25%;
+}
 
 .grid-wrapper {
 	height: 100vh;
