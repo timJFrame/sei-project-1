@@ -57,7 +57,7 @@ main{
 		align-items: center;
 		text-align: center;
 		padding: 0px 40px;
-		color: #f4f0db
+		color: #f4f0db;
 	}
 	
 	.game-options{
@@ -83,11 +83,10 @@ main{
 flex-direction: column;
 align-items: center;
 flex:1;
-margin-top: 110px;
+margin-top: 60px;
 color: #f4f0db;
 text-align: center;
 }
-
 
 
 .start-button{
@@ -115,7 +114,7 @@ text-align: center;
 }
 
 .token{
-	max-width: 10-%;
+	max-width: 10%;
 }
 
 .player-score{
@@ -157,6 +156,32 @@ text-align: center;
 	flex-grow: 1;
 	height: 7.14%;
 	width: 7.14%;
+}
+
+.end-of-game-message-div{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 50px;
+	border: 1px solid #000066;
+}
+
+.end-of-game-message{
+	color: #f4f0db;
+	font-family: 'Xanh Mono', monospace;
+	margin: 10px;
+}
+
+.end-of-game-button{
+	align-self: center;
+	border: none;
+	margin-top: 10px;
+	background-color: #000066;
+	color: #f4f0db;
+	padding: 10px 25px;
+	border-radius: 10px;
+	font-family: 'Xanh Mono', monospace;
 }
 
 .food{

@@ -7,15 +7,17 @@ function init (){
   const life1 = document.querySelector('.life1')
   const life2 = document.querySelector('.life2')
   const life3 = document.querySelector('.life3')
-  const playerScoreString = document.querySelector('.player-score')
+  const playerScoreString = document.querySelector('.player-score span')
   const startButton = document.querySelector('.start-button')
   const gamesound = document.querySelector('audio')
   const mainPageContent = document.querySelector('main')
   const landingPageButton = document.querySelector('.landing-page-button')
   const landingPageDiv = document.querySelector('.landing-page')
+  const endOfGameMessageDiv = document.querySelector('.end-of-game-message-div')
+  const endOfGameMessageText = document.querySelector('.end-of-game-message')
+  const endOfGameButton = document.querySelector('.end-of-game-button')
 
   
-
 
   //*Game variable
   const cells = []
@@ -46,7 +48,6 @@ function init (){
 
 
   //*Landing page 
-
   mainPageContent.style.display = 'none'
 
   function handleShowGameClick(){
@@ -56,6 +57,8 @@ function init (){
     landingPageDiv.style.display = 'none'
   }
 
+  //*Hide end of game button
+  endOfGameMessageDiv.style.display = 'none'
 
 
 
@@ -397,7 +400,6 @@ function init (){
 
       //*Checks to see if game is over and ends timer
       if (isGameOverPlayerLost === 'yes' || isGameOverPlayerWon === 'yes'){
-        console.dir(timer)
         stopTimer(timer)
         
       }
@@ -417,29 +419,41 @@ function init (){
   }
 
   //*Functions tracks harrys movement
-  function voldemortTrackingFunction(index, horzintalDistance, verticalDistance){
+  function voldemortTrackingFunction(index, horzintalDistance, verticalDistance, cellDistance){
+
+    const horizontalPosition = voldemorts[index].position % width
+      const verticalPosition = Math.floor(voldemorts[index].position / width)
 
     removeVoldemorts(index)
     //*Search left
-    if (cells[voldemorts[index].position - horzintalDistance].className.includes('harry')){
+    if(horizontalPosition - cellDistance > 0){
+      if (cells[voldemorts[index].position - horzintalDistance].className.includes('harry')){
       voldemorts[index].position--
       console.log('search left')
+      console.log(horizontalPosition)
+      }
       
     //*Search Right
-    } else if (cells[voldemorts[index].position + horzintalDistance].className.includes('harry')){
+    } else  if(horizontalPosition + cellDistance < width -1){
+      if (cells[voldemorts[index].position + horzintalDistance].className.includes('harry')){
       voldemorts[index].position++
       console.log('seach right')
-      
+      console.log(horizontalPosition)
+    }
     //* Search Up
-    } else if (cells[voldemorts[index].position - verticalDistance].className.includes('harry')){
+    } else if(verticalPosition - cellDistance > 0){
+      if (cells[voldemorts[index].position - verticalDistance].className.includes('harry')){
       voldemorts[index].position -= width
       console.log('search up')
-      
+      console.log(verticalPosition)
+    }
     //*Searches Down
-    } else if (cells[voldemorts[index].position + verticalDistance].className.includes('harry')){
+    } else if(verticalPosition + cellDistance < width - 1){
+      if (cells[voldemorts[index].position + verticalDistance].className.includes('harry')){
       voldemorts[index].position += width
       console.log('search down')
-     
+      console.log(verticalPosition)
+    }
     }
     addVoldemorts(index)
   }
@@ -485,11 +499,15 @@ function init (){
   function closeHoldingBox(){
     cells[90].classList.add('block-bottom-side')
     cells[91].classList.add('block-bottom-side')
+    cells[90].setAttribute('data-id', 'block')
+    cells[91].setAttribute('data-id', 'block')
   }
 
   function removeHoldingBox(){
     cells[90].classList.remove('block-bottom-side')
     cells[91].classList.remove('block-bottom-side')
+    cells[90].removeAttribute('data-id', 'block')
+    cells[91].removeAttribute('data-id', 'block')
   }
   
 
@@ -515,12 +533,23 @@ function init (){
         life2.style.display = 'none'
       } else if (harryLives === 0){
         life3.style.display = 'none'
-        alert('You lost!!! You\'re all out of lives')
+        playerLost()
         isGameOverPlayerLost = 'yes'
       }
-      console.log('loses life functtion' + harryLives)
     }
     
+  }
+
+  function playerLost(){
+    grid.style.display = 'none'
+    endOfGameMessageText.innerHTML = 'The Dark Lord Has Prevailed'
+    endOfGameMessageDiv.style.display = 'flex'
+  }
+
+  function playerWon(){
+    grid.style.display = 'none'
+    endOfGameMessageText.innerHTML = 'Well Done Harry Paccer'
+     endOfGameMessageDiv.style.display = 'flex'
   }
 
   
@@ -542,12 +571,9 @@ function init (){
         life2.style.display = 'none'
       } else if (harryLives === 0){
         life3.style.display = 'none'
-        alert('You lost!!! You\'re all out of lives')
+        playerLost()
         isGameOverPlayerLost = 'yes'
       }
-
-     
-      console.log('loses life functtion' + harryLives)
     }
   }
  
@@ -557,11 +583,11 @@ function init (){
       cells[harryPosition].classList.remove('food')
       playerScore += 5
      
-      playerScoreString.innerHTML = `Score: ${playerScore}`
+      playerScoreString.innerHTML = playerScore
       if (playerScore > 449){
         isGameOverPlayerWon = 'yes'
        
-        alert('Congraduations You won!!!!')
+        playerWon()
       }
     }
   }
@@ -572,11 +598,11 @@ function init (){
       cells[harryPosition].classList.remove('power-up')
       playerScore += 20
       console.log(playerScore)
-      playerScoreString.innerHTML = `Score: ${playerScore}`
+      playerScoreString.innerHTML = playerScore
       if (playerScore > 449){
         isGameOverPlayerWon = 'yes'
         console.log('met')
-        alert('Congraduations You won!!!!')
+        playerWon()
       }
       didHarryEatSpecialFood = 'yes'
       console.log(didHarryEatSpecialFood)
@@ -656,7 +682,7 @@ function init (){
     //*Closes box that holds voldemort
     setTimeout(() =>{
       closeHoldingBox()
-    }, 3000)
+    }, 6000)
     
 
     if (gameTimer){
@@ -665,51 +691,55 @@ function init (){
 
     gameTimer = setInterval(() =>{
 
-      
+      startButton.style.display = 'none'
 
       harryEatsVoldemort(0, 90)
       harryEatsVoldemort(1, 91)
       harryEatsVoldemort(2, 76)
       harryEatsVoldemort(3, 77)
 
-     
-      
       //*Sets a 9 second window where voldemort can be eaten by harry
       removeSpecialVoldemortClass()
 
       //*Searches 1 div radius for harry
       if (didHarryEatSpecialFood === 'no'){
-        voldemortTrackingFunction(0, 1, 14)
-        voldemortTrackingFunction(1, 1, 14)
-        voldemortTrackingFunction(2, 1, 14)
-        voldemortTrackingFunction(3, 1, 14)
-        console.log('tracking 1 div running')
-        console
+        voldemortTrackingFunction(0, 1, 14, 1)
+        voldemortTrackingFunction(1, 1, 14, 1)
+        voldemortTrackingFunction(2, 1, 14, 1)
+        voldemortTrackingFunction(3, 1, 14, 1)
+       
       }
       
-      startButton.style.display = 'none'
-
-      // //*Searches 2 div radius for harry
-      // if (didHarryEatSpecialFood === 'no'){
-      //   voldemortTrackingFunction(0, 2, 28)
-      //   voldemortTrackingFunction(1, 2, 28)
-      //   voldemortTrackingFunction(2, 2, 28)
-      //   voldemortTrackingFunction(3, 2, 28)
-      //   console.log('tracking 2 divs running')
-      // }
-
-      // //*Searches 3 div radius for harry
-      // voldemortTrackingFunction(0, 3, 42)
-      // voldemortTrackingFunction(1, 3, 42)
-      // voldemortTrackingFunction(2, 3, 42)
-      // voldemortTrackingFunction(3, 3, 42)
-
+      //*Searches 2 div radius for harry
+      if (didHarryEatSpecialFood === 'no'){
+        voldemortTrackingFunction(0, 2, 28, 2)
+        voldemortTrackingFunction(1, 2, 28, 2)
+        voldemortTrackingFunction(2, 2, 28, 2)
+        voldemortTrackingFunction(3, 2, 28, 2)
+      }
+      //*Searches 3 div radius for harry
+      if (didHarryEatSpecialFood === 'no'){
+      voldemortTrackingFunction(0, 3, 42, 3)
+      voldemortTrackingFunction(1, 3, 42, 3)
+      voldemortTrackingFunction(2, 3, 42, 3)
+      voldemortTrackingFunction(3, 3, 42, 3)
+      }
       // //*Searches 4 div radius for harry
-      // voldemortTrackingFunction(0, 4, 56)
-      // voldemortTrackingFunction(1, 4, 56)
-      // voldemortTrackingFunction(2, 4, 56)
-      // voldemortTrackingFunction(3, 4, 56)
-   
+      if (didHarryEatSpecialFood === 'no'){
+      voldemortTrackingFunction(0, 4, 56, 4)
+      voldemortTrackingFunction(1, 4, 56, 4)
+      voldemortTrackingFunction(2, 4, 56, 4)
+      voldemortTrackingFunction(3, 4, 56, 4)
+      }
+       // //*Searches 5 div radius for harry
+       if (didHarryEatSpecialFood === 'no'){
+        voldemortTrackingFunction(0, 5, 56, 5)
+        voldemortTrackingFunction(1, 5, 56, 5)
+        voldemortTrackingFunction(2, 5, 56, 5)
+        voldemortTrackingFunction(3, 5, 56, 5)
+        }
+
+
       if (didHarryEatSpecialFood === 'no'){
         harryLosesLifeFromVoldemortsView(0)
         harryLosesLifeFromVoldemortsView(1)
@@ -717,11 +747,11 @@ function init (){
         harryLosesLifeFromVoldemortsView(3)
       }
 
-      //*Tests if either the player or computer has won and reloads browser in either event
-      if (isGameOverPlayerLost === 'yes' || isGameOverPlayerWon === 'yes'){
-        console.log('condition meet')
-        gameOver()
-      }
+      // //*Tests if either the player or computer has won and reloads browser in either event
+      // if (isGameOverPlayerLost === 'yes' || isGameOverPlayerWon === 'yes'){
+      //   console.log('condition meet')
+      //   gameOver()
+      // }
 
     
      
@@ -731,7 +761,7 @@ function init (){
   }
   
   //** Reloads page when game ends 
-  function gameOver(){
+  function handleEndOfGameClick(){
     location.reload()
 
   }
@@ -747,6 +777,7 @@ function init (){
   document.addEventListener('keydown', handleKeyUp)
   startButton.addEventListener('click', handleGameStart)
   landingPageButton.addEventListener('click', handleShowGameClick)
+  endOfGameButton.addEventListener('click', handleEndOfGameClick)
 
 
 }
