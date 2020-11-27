@@ -436,15 +436,17 @@ function init (){
       console.log('seach right')
     }
     //* Search Up
-    } else if(verticalPosition > 0){
-      console.log('passesd')
+    } 
+    
+    if(verticalPosition > 3){
+      
       if (cells[voldemorts[index].position - verticalDistance].className.includes('harry')){
       voldemorts[index].position -= width
       console.log('search up')
     }
     //*Searches Down
-    } else if(verticalPosition < width - 2){
-      console.log('passesd')
+    } else if(verticalPosition < 10){
+      
       if (cells[voldemorts[index].position + verticalDistance].className.includes('harry')){
       voldemorts[index].position += width
       console.log('search down')
