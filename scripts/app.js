@@ -445,7 +445,8 @@ function init (){
       console.log('search up')
     }
     //*Searches Down
-    } else if(verticalPosition < 10){
+    } 
+    if(verticalPosition < 10){
       
       if (cells[voldemorts[index].position + verticalDistance].className.includes('harry')){
       voldemorts[index].position += width
