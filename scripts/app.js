@@ -226,6 +226,8 @@ function init (){
     cells[harryPosition].classList.remove('rotate-harry-down')
   }
 
+  
+
   //*Handles harrys movement when a player uses an arrow key and only runs when start button is clicked
   function handleKeyUp(e){
     if (isGameStarted === 'yes'){
@@ -359,9 +361,10 @@ function init (){
         removeSpecialVoldemorts(index)
         removeVoldemorts(index)
       }
-      
+     
       
       if (randomiseVoldemortMovements() === 'left'){
+        
         //*Move Left
         // if (didHarryEatSpecialFood === 'yes'){
         //   voldemorts[index].position
@@ -371,6 +374,7 @@ function init (){
         } 
         //*Move Right
       } else if (randomiseVoldemortMovements() === 'right'){
+
         // if (didHarryEatSpecialFood === 'yes'){
         //   voldemorts[index].position
         // } else
@@ -409,52 +413,74 @@ function init (){
    
   }
 
+  const harryHorizontalPosition = harryPosition % width
+  const harryVerticalPosition = Math.floor(harryPosition / width)
+
   //*Stops timer inside moveVoldemort Function
   function stopTimer(timer){
     clearInterval(timer)
   }
 
-  //*Functions tracks harrys movement
-  function voldemortTrackingFunction(index, horzintalDistance, verticalDistance, cellDistance){
-
-    const horizontalPosition = voldemorts[index].position % width
-    const verticalPosition = Math.floor(voldemorts[index].position / width)
-
-
+  function trackHarry(index){
+   
     removeVoldemorts(index)
-    //*Search left
-    if (horizontalPosition - cellDistance > 0){
-      if (cells[voldemorts[index].position - horzintalDistance].className.includes('harry')){
-        voldemorts[index].position--
-        console.log('search left')
-      }
+    if (harryHorizontalPosition > 7 && cells[voldemorts[index].position + 1].dataset.id !== 'block'){
+      voldemorts[index].position++
       
-    //*Search Right
-    } else  if (horizontalPosition + cellDistance < width - 1){
-      if (cells[voldemorts[index].position + horzintalDistance].className.includes('harry')){
-        voldemorts[index].position++
-        console.log('seach right')
-      }
-    //* Search Up
     } 
-    
-    if (verticalPosition > 3){
-      
-      if (cells[voldemorts[index].position - verticalDistance].className.includes('harry')){
-        voldemorts[index].position -= width
-        console.log('search up')
-      }
-    //*Searches Down
-    } 
-    if (verticalPosition < 10){
-      
-      if (cells[voldemorts[index].position + verticalDistance].className.includes('harry')){
-        voldemorts[index].position += width
-        console.log('search down')
-      }
+    if (harryPosition > voldemorts[index].position && cells[voldemorts[index].position + width].dataset.id !== 'block'){
+      voldemorts[index].position += width
+    }
+    if (harryHorizontalPosition < 7 && cells[voldemorts[index].position - 1].dataset.id !== 'block'){
+      voldemorts[index].position--
+    }
+    if (harryPosition < voldemorts[index].position && cells[voldemorts[index].position - width].dataset.id !== 'block'){
+      voldemorts[index].position -= width
     }
     addVoldemorts(index)
   }
+
+  // //*Functions tracks harrys movement
+  // function voldemortTrackingFunction(index, horzintalDistance, verticalDistance, cellDistance){
+
+  //   const horizontalPosition = voldemorts[index].position % width
+  //   const verticalPosition = Math.floor(voldemorts[index].position / width)
+
+
+  //   removeVoldemorts(index)
+  //   //*Search left
+  //   if (horizontalPosition - cellDistance > 0){
+  //     if (cells[voldemorts[index].position - horzintalDistance].className.includes('harry')){
+  //       voldemorts[index].position--
+  //       console.log('search left')
+  //     }
+      
+  //   //*Search Right
+  //   } else  if (horizontalPosition + cellDistance < width - 1){
+  //     if (cells[voldemorts[index].position + horzintalDistance].className.includes('harry')){
+  //       voldemorts[index].position++
+  //       console.log('seach right')
+  //     }
+  //   //* Search Up
+  //   } 
+    
+  //   if (verticalPosition > 3){
+      
+  //     if (cells[voldemorts[index].position - verticalDistance].className.includes('harry')){
+  //       voldemorts[index].position -= width
+  //       console.log('search up')
+  //     }
+  //   //*Searches Down
+  //   } 
+  //   if (verticalPosition < 10){
+      
+  //     if (cells[voldemorts[index].position + verticalDistance].className.includes('harry')){
+  //       voldemorts[index].position += width
+  //       console.log('search down')
+  //     }
+  //   }
+  //   addVoldemorts(index)
+  // }
 
   //*Moves voldemorts ghost out of holding box to the right of the page
   function moveOutRight(index){
@@ -697,42 +723,49 @@ function init (){
       //*Sets a 9 second window where voldemort can be eaten by harry
       removeSpecialVoldemortClass()
 
-      //*Searches 1 div radius for harry
-      if (didHarryEatSpecialFood === 'no'){
-        voldemortTrackingFunction(0, 1, 14, 1)
-        voldemortTrackingFunction(1, 1, 14, 1)
-        voldemortTrackingFunction(2, 1, 14, 1)
-        voldemortTrackingFunction(3, 1, 14, 1)
+      if (didHarryEatSpecialFood === 'no' ){
+        trackHarry(0)
+        trackHarry(1)
+        trackHarry(1)
+        trackHarry(3)
       }
+
+      // //*Searches 1 div radius for harry
+      // if (didHarryEatSpecialFood === 'no'){
+      //   voldemortTrackingFunction(0, 1, 14, 1)
+      //   voldemortTrackingFunction(1, 1, 14, 1)
+      //   voldemortTrackingFunction(2, 1, 14, 1)
+      //   voldemortTrackingFunction(3, 1, 14, 1)
+      // }
       
-      //*Searches 2 div radius for harry
-      if (didHarryEatSpecialFood === 'no'){
-        voldemortTrackingFunction(0, 2, 28, 2)
-        voldemortTrackingFunction(1, 2, 28, 2)
-        voldemortTrackingFunction(2, 2, 28, 2)
-        voldemortTrackingFunction(3, 2, 28, 2)
-      }
-      //*Searches 3 div radius for harry
-      if (didHarryEatSpecialFood === 'no'){
-        voldemortTrackingFunction(0, 3, 42, 3)
-        voldemortTrackingFunction(1, 3, 42, 3)
-        voldemortTrackingFunction(2, 3, 42, 3)
-        voldemortTrackingFunction(3, 3, 42, 3)
-      }
-      // //*Searches 4 div radius for harry
-      if (didHarryEatSpecialFood === 'no'){
-        voldemortTrackingFunction(0, 4, 56, 4)
-        voldemortTrackingFunction(1, 4, 56, 4)
-        voldemortTrackingFunction(2, 4, 56, 4)
-        voldemortTrackingFunction(3, 4, 56, 4)
-      }
-      // //*Searches 5 div radius for harry
-      if (didHarryEatSpecialFood === 'no'){
-        voldemortTrackingFunction(0, 5, 56, 5)
-        voldemortTrackingFunction(1, 5, 56, 5)
-        voldemortTrackingFunction(2, 5, 56, 5)
-        voldemortTrackingFunction(3, 5, 56, 5)
-      }
+      // //*Searches 2 div radius for harry
+      // if (didHarryEatSpecialFood === 'no'){
+      //   voldemortTrackingFunction(0, 2, 28, 2)
+      //   voldemortTrackingFunction(1, 2, 28, 2)
+      //   voldemortTrackingFunction(2, 2, 28, 2)
+      //   voldemortTrackingFunction(3, 2, 28, 2)
+      // }
+      // //*Searches 3 div radius for harry
+      // if (didHarryEatSpecialFood === 'no'){
+      //   voldemortTrackingFunction(0, 3, 42, 3)
+      //   voldemortTrackingFunction(1, 3, 42, 3)
+      //   voldemortTrackingFunction(2, 3, 42, 3)
+      //   voldemortTrackingFunction(3, 3, 42, 3)
+      // }
+      // // //*Searches 4 div radius for harry
+      // if (didHarryEatSpecialFood === 'no'){
+      //   voldemortTrackingFunction(0, 4, 56, 4)
+      //   voldemortTrackingFunction(1, 4, 56, 4)
+      //   voldemortTrackingFunction(2, 4, 56, 4)
+      //   voldemortTrackingFunction(3, 4, 56, 4)
+      // }
+      // // //*Searches 5 div radius for harry
+      // if (didHarryEatSpecialFood === 'no'){
+      //   voldemortTrackingFunction(0, 5, 56, 5)
+      //   voldemortTrackingFunction(1, 5, 56, 5)
+      //   voldemortTrackingFunction(2, 5, 56, 5)
+      //   voldemortTrackingFunction(3, 5, 56, 5)
+      // }
 
 
       if (didHarryEatSpecialFood === 'no'){
@@ -752,14 +785,14 @@ function init (){
 
   }
 
-  function noScroll() {
-    window.scrollTo(0, 0)
-  }
+  // function noScroll() {
+  //   window.scrollTo(0, 0)
+  // }
 
 
  
   //!-------------------EVENT HANDLER--------------------------------------
-  window.addEventListener('scroll', noScroll)
+  // window.addEventListener('scroll', noScroll)
   document.addEventListener('keyup', handleKeyUp)
   startButton.addEventListener('click', handleGameStart)
   landingPageButton.addEventListener('click', handleShowGameClick)
