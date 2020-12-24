@@ -752,14 +752,14 @@ function init (){
 
   }
 
-  // function noScroll() {
-  //   window.scrollTo(0, 0)
-  // }
+  function noScroll() {
+    window.scrollTo(0, 0)
+  }
 
 
  
   //!-------------------EVENT HANDLER--------------------------------------
-  // window.addEventListener('scroll', noScroll)
+  window.addEventListener('scroll', noScroll)
   document.addEventListener('keyup', handleKeyUp)
   startButton.addEventListener('click', handleGameStart)
   landingPageButton.addEventListener('click', handleShowGameClick)
