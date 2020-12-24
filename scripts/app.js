@@ -374,25 +374,15 @@ function init (){
         } 
         //*Move Right
       } else if (randomiseVoldemortMovements() === 'right'){
-
-        // if (didHarryEatSpecialFood === 'yes'){
-        //   voldemorts[index].position
-        // } else
         if (cells[voldemorts[index].position + 1].dataset.id !== 'block'){
           voldemorts[index].position++
         }
         //*Move Up
       } else if (randomiseVoldemortMovements() === 'up'){
-        // if (didHarryEatSpecialFood === 'yes'){
-        //   voldemorts[index].position
-        // } else 
         if (cells[voldemorts[index].position - width].dataset.id !== 'block'){
           voldemorts[index].position -= width
         }//*Move Down
       } else if (randomiseVoldemortMovements() === 'down'){
-        // if (didHarryEatSpecialFood === 'yes'){
-        //   voldemorts[index].position
-        // } else 
         if (cells[voldemorts[index].position + width].dataset.id !== 'block'){  
           voldemorts[index].position += width
         }
@@ -414,15 +404,14 @@ function init (){
   }
 
   const harryHorizontalPosition = harryPosition % width
-  const harryVerticalPosition = Math.floor(harryPosition / width)
 
   //*Stops timer inside moveVoldemort Function
   function stopTimer(timer){
     clearInterval(timer)
   }
 
+  // //*Functions tracks harrys movement
   function trackHarry(index){
-   
     removeVoldemorts(index)
     if (harryHorizontalPosition > 7 && cells[voldemorts[index].position + 1].dataset.id !== 'block'){
       voldemorts[index].position++
@@ -440,48 +429,7 @@ function init (){
     addVoldemorts(index)
   }
 
-  // //*Functions tracks harrys movement
-  // function voldemortTrackingFunction(index, horzintalDistance, verticalDistance, cellDistance){
-
-  //   const horizontalPosition = voldemorts[index].position % width
-  //   const verticalPosition = Math.floor(voldemorts[index].position / width)
-
-
-  //   removeVoldemorts(index)
-  //   //*Search left
-  //   if (horizontalPosition - cellDistance > 0){
-  //     if (cells[voldemorts[index].position - horzintalDistance].className.includes('harry')){
-  //       voldemorts[index].position--
-  //       console.log('search left')
-  //     }
-      
-  //   //*Search Right
-  //   } else  if (horizontalPosition + cellDistance < width - 1){
-  //     if (cells[voldemorts[index].position + horzintalDistance].className.includes('harry')){
-  //       voldemorts[index].position++
-  //       console.log('seach right')
-  //     }
-  //   //* Search Up
-  //   } 
-    
-  //   if (verticalPosition > 3){
-      
-  //     if (cells[voldemorts[index].position - verticalDistance].className.includes('harry')){
-  //       voldemorts[index].position -= width
-  //       console.log('search up')
-  //     }
-  //   //*Searches Down
-  //   } 
-  //   if (verticalPosition < 10){
-      
-  //     if (cells[voldemorts[index].position + verticalDistance].className.includes('harry')){
-  //       voldemorts[index].position += width
-  //       console.log('search down')
-  //     }
-  //   }
-  //   addVoldemorts(index)
-  // }
-
+ 
   //*Moves voldemorts ghost out of holding box to the right of the page
   function moveOutRight(index){
     const timer = setInterval(()=> {
