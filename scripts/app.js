@@ -760,7 +760,7 @@ function init (){
  
   //!-------------------EVENT HANDLER--------------------------------------
   // window.addEventListener('scroll', noScroll)
-  document.addEventListener('keydown', handleKeyUp)
+  document.addEventListener('keyup', handleKeyUp)
   startButton.addEventListener('click', handleGameStart)
   landingPageButton.addEventListener('click', handleShowGameClick)
   endOfGameButton.addEventListener('click', handleEndOfGameClick)
