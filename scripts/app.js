@@ -26,7 +26,7 @@ function init (){
   let harryLives = 3
   let playerScore = 0
   let gameTimer = null
-  let isGameOverPlayerLost = 'no'
+  const isGameOverPlayerLost = 'no'
   let isGameOverPlayerWon = 'no'
   const voldemortClass = 'voldemort'
   let didHarryEatSpecialFood = 'no'
@@ -423,35 +423,35 @@ function init (){
 
     removeVoldemorts(index)
     //*Search left
-    if(horizontalPosition - cellDistance > 0){
+    if (horizontalPosition - cellDistance > 0){
       if (cells[voldemorts[index].position - horzintalDistance].className.includes('harry')){
-      voldemorts[index].position--
-      console.log('search left')
+        voldemorts[index].position--
+        console.log('search left')
       }
       
     //*Search Right
-    } else  if(horizontalPosition + cellDistance < width -1){
+    } else  if (horizontalPosition + cellDistance < width - 1){
       if (cells[voldemorts[index].position + horzintalDistance].className.includes('harry')){
-      voldemorts[index].position++
-      console.log('seach right')
-    }
+        voldemorts[index].position++
+        console.log('seach right')
+      }
     //* Search Up
     } 
     
-    if(verticalPosition > 3){
+    if (verticalPosition > 3){
       
       if (cells[voldemorts[index].position - verticalDistance].className.includes('harry')){
-      voldemorts[index].position -= width
-      console.log('search up')
-    }
+        voldemorts[index].position -= width
+        console.log('search up')
+      }
     //*Searches Down
     } 
-    if(verticalPosition < 10){
+    if (verticalPosition < 10){
       
       if (cells[voldemorts[index].position + verticalDistance].className.includes('harry')){
-      voldemorts[index].position += width
-      console.log('search down')
-    }
+        voldemorts[index].position += width
+        console.log('search down')
+      }
     }
     addVoldemorts(index)
   }
@@ -547,7 +547,7 @@ function init (){
   function playerWon(){
     grid.style.display = 'none'
     endOfGameMessageText.innerHTML = 'Well Done Harry Paccer'
-     endOfGameMessageDiv.style.display = 'flex'
+    endOfGameMessageDiv.style.display = 'flex'
   }
 
   
@@ -714,25 +714,25 @@ function init (){
       }
       //*Searches 3 div radius for harry
       if (didHarryEatSpecialFood === 'no'){
-      voldemortTrackingFunction(0, 3, 42, 3)
-      voldemortTrackingFunction(1, 3, 42, 3)
-      voldemortTrackingFunction(2, 3, 42, 3)
-      voldemortTrackingFunction(3, 3, 42, 3)
+        voldemortTrackingFunction(0, 3, 42, 3)
+        voldemortTrackingFunction(1, 3, 42, 3)
+        voldemortTrackingFunction(2, 3, 42, 3)
+        voldemortTrackingFunction(3, 3, 42, 3)
       }
       // //*Searches 4 div radius for harry
       if (didHarryEatSpecialFood === 'no'){
-      voldemortTrackingFunction(0, 4, 56, 4)
-      voldemortTrackingFunction(1, 4, 56, 4)
-      voldemortTrackingFunction(2, 4, 56, 4)
-      voldemortTrackingFunction(3, 4, 56, 4)
+        voldemortTrackingFunction(0, 4, 56, 4)
+        voldemortTrackingFunction(1, 4, 56, 4)
+        voldemortTrackingFunction(2, 4, 56, 4)
+        voldemortTrackingFunction(3, 4, 56, 4)
       }
-       // //*Searches 5 div radius for harry
-       if (didHarryEatSpecialFood === 'no'){
+      // //*Searches 5 div radius for harry
+      if (didHarryEatSpecialFood === 'no'){
         voldemortTrackingFunction(0, 5, 56, 5)
         voldemortTrackingFunction(1, 5, 56, 5)
         voldemortTrackingFunction(2, 5, 56, 5)
         voldemortTrackingFunction(3, 5, 56, 5)
-        }
+      }
 
 
       if (didHarryEatSpecialFood === 'no'){
@@ -752,14 +752,14 @@ function init (){
 
   }
 
-  function noScroll() {
-    window.scrollTo(0, 0)
-  }
+  // function noScroll() {
+  //   window.scrollTo(0, 0)
+  // }
 
 
  
   //!-------------------EVENT HANDLER--------------------------------------
-  window.addEventListener('scroll', noScroll)
+  // window.addEventListener('scroll', noScroll)
   document.addEventListener('keydown', handleKeyUp)
   startButton.addEventListener('click', handleGameStart)
   landingPageButton.addEventListener('click', handleShowGameClick)

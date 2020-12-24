@@ -26,20 +26,21 @@ main{
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	max-width: 100vw;
 }
 
 
 .landing-page-image{
-	max-width: 100%;
+	max-width: 50%;
 }
 
 .landing-page-button{
 	border: none;
-	padding: 10px 200px;
+	padding: 15px 50px;
 	border-radius: 10px;
 	font-family: 'Xanh Mono', monospace;
-	background-color: rgba(0,0, 49, 0.5);
-	margin-top: -25px;
+	background-color: rgba(15, 15, 161, 0.5);
+	box-shadow: 1px 1px 15px rgba(255, 255, 255, 0.2);
 	color: #f4f0db
 }
 
@@ -129,8 +130,6 @@ margin: 25px 0 15px 0;
 	display: flex;
 	flex-direction: column;
 	margin: 20px 35px 0px 20px;
-	
-
 	align-items: center;
 }
 
@@ -196,12 +195,12 @@ margin: 25px 0 15px 0;
 .food{
 background-image: url('../images/characters/food.gif');
 background-repeat: none;
-background-attachment: contain;
+background-size: contain;
 }
 .power-up{
 	background-image: url('../images/characters/special-food.gif');
 	background-repeat: none;
-	background-attachment: contain;
+	background-size: contain;
 	}
 
 
@@ -336,3 +335,15 @@ background-attachment: contain;
 
 
 
+@media only screen and (max-width: 768px) {
+
+main{
+	flex-direction: column;
+}
+
+.grid{
+	height: 400px;
+	width: 400px;
+}
+
+}
