@@ -366,9 +366,6 @@ function init (){
       if (randomiseVoldemortMovements() === 'left'){
         
         //*Move Left
-        // if (didHarryEatSpecialFood === 'yes'){
-        //   voldemorts[index].position
-        // } else 
         if (cells[voldemorts[index].position - 1].dataset.id !== 'block'){
           voldemorts[index].position--
         } 
