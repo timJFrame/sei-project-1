@@ -364,7 +364,6 @@ function init (){
      
       
       if (randomiseVoldemortMovements() === 'left'){
-        
         //*Move Left
         if (cells[voldemorts[index].position - 1].dataset.id !== 'block'){
           voldemorts[index].position--
@@ -675,43 +674,6 @@ function init (){
         trackHarry(3)
       }
 
-      // //*Searches 1 div radius for harry
-      // if (didHarryEatSpecialFood === 'no'){
-      //   voldemortTrackingFunction(0, 1, 14, 1)
-      //   voldemortTrackingFunction(1, 1, 14, 1)
-      //   voldemortTrackingFunction(2, 1, 14, 1)
-      //   voldemortTrackingFunction(3, 1, 14, 1)
-      // }
-      
-      // //*Searches 2 div radius for harry
-      // if (didHarryEatSpecialFood === 'no'){
-      //   voldemortTrackingFunction(0, 2, 28, 2)
-      //   voldemortTrackingFunction(1, 2, 28, 2)
-      //   voldemortTrackingFunction(2, 2, 28, 2)
-      //   voldemortTrackingFunction(3, 2, 28, 2)
-      // }
-      // //*Searches 3 div radius for harry
-      // if (didHarryEatSpecialFood === 'no'){
-      //   voldemortTrackingFunction(0, 3, 42, 3)
-      //   voldemortTrackingFunction(1, 3, 42, 3)
-      //   voldemortTrackingFunction(2, 3, 42, 3)
-      //   voldemortTrackingFunction(3, 3, 42, 3)
-      // }
-      // // //*Searches 4 div radius for harry
-      // if (didHarryEatSpecialFood === 'no'){
-      //   voldemortTrackingFunction(0, 4, 56, 4)
-      //   voldemortTrackingFunction(1, 4, 56, 4)
-      //   voldemortTrackingFunction(2, 4, 56, 4)
-      //   voldemortTrackingFunction(3, 4, 56, 4)
-      // }
-      // // //*Searches 5 div radius for harry
-      // if (didHarryEatSpecialFood === 'no'){
-      //   voldemortTrackingFunction(0, 5, 56, 5)
-      //   voldemortTrackingFunction(1, 5, 56, 5)
-      //   voldemortTrackingFunction(2, 5, 56, 5)
-      //   voldemortTrackingFunction(3, 5, 56, 5)
-      // }
-
 
       if (didHarryEatSpecialFood === 'no'){
         harryLosesLifeFromVoldemortsView(0)
@@ -719,7 +681,6 @@ function init (){
         harryLosesLifeFromVoldemortsView(2)
         harryLosesLifeFromVoldemortsView(3)
       }
-
     }, 1000)
 
   }
