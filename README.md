@@ -1,6 +1,6 @@
 <H1>SEI-Project One: Pac Man </H1>
 <h2>Project Brief</h2>
-<p>Pac Man is a classic arcade game from the 80s. The player aims eat all the food in a maze whilst being hunted by ghosts.</p>
+<p>Pac Man is a classic arcade game from the 80s. The player aims to eat all the food in a maze whilst being hunted by ghosts.</p>
 
 <p>This was the first project I completed in General Assembly’s Immersive Software Engineering course. In project one I was tasked with creating a single page game constructed from HTML, CSS and JavaScript only over a 7 day period</p>
 
@@ -64,7 +64,7 @@
 <h3>Functionality</h3>
 
 <h4>Player Movement</h4>
-<p>Next I implemented Harrys movement. Here I used a switch statement that checked what arrow key had been pressed using keyboard event keycodes. Once the keycode was determined the correct movement was returned by the switch statement. At this point I found that Harry would need to be rotated to give more realistic vertical movement and flipped to give a more realistic horizontal movement. For the vertical movement I used a series of classes with different degrees of rotation and for the horizontal movement I flipped the original Harry gif in photoshop and applied it to a new class. </p>
+<p>Next I implemented Harrys movement. Here I used a switch statement that checked what arrow key had been pressed using keyboard event keycodes. Once the keycode was determined the correct movement was returned by the switch statement. At this point I found that Harry would need to be rotated to give more realistic vertical movement and flipped to give a more realistic horizontal movement. For the vertical movement I used a series of CSS classes with different degrees of rotation and for the horizontal movement I flipped the original Harry gif in photoshop and applied it to a new CSS class. </p>
 
 <h4>Voldemort Ghost Movement</h4>
 <p>The next step was getting the Voldemort ghosts to move. The ghosts needed to move randomly but also track Harry’s movement. For the random movement I made an array of movements and created a function that would randomly pick a movement. From there I used an if statement that would apply the movement that corresponded to the randomly selected movement.</p>
@@ -104,7 +104,7 @@
 
 <p>The next stage in my process was creating a function that dealt with harry eating tokens and adding each eaten token to the players score. Once this was working I created a function that to display a winning message when all the tokens on the board were eaten and incorporated this into the ‘end of game function’.</p>
 
-<p>The last important piece of functionality was a function to be used when Harry ate a green token. When this happened all of the Voldemort ghosts had a new class applied for a short period of time. While the special class was applied the ghosts tracking logic was disabled and Harry would not lose any lives if he came into contact with a ghost and was also able to eat a ghost and send it back to its starting position.</p>
+<p>The last important piece of functionality was a function to be used when Harry ate a green token. When this happened all of the Voldemort ghosts had a new CSS class applied for a short period of time. While the special class was applied the ghosts tracking logic was disabled and Harry would not lose any lives if he came into contact with a ghost and was also able to eat a ghost and send it back to its starting position.</p>
 
 <p>At this point all the core logic of the game was working. From here I created another function that moved the Voldemort ghosts onto the board more smoothly. Prior to this it had been a bit janky. Then I created a game timer function that used a series of setIntervals and setTimeouts to get the game logic working in sync. Lastly I made a function that would play, ‘Hedwig’s Theme Song’ when a player clicked the ‘play game’ button on the home page.</p>
 
