@@ -24,6 +24,8 @@
 <h3>How to Move Harry</h3>
 <p>Harry is controlled using: ↑ ↓ ← →  arrow keys</p>
 
+You can find a live version of the app here: [Harry Paccer](https://timjframe.github.io/sei-project-1/)
+
 <h3>Game Instructions</h3>
 
 <ol>
@@ -61,46 +63,36 @@
 
 <p>To make the obstacles in the game I created a series of arrays that held the div index’s of the div’s that would be used as obstacles. For example all the right corner blocks would be held in one array and all the left-hand blocks would be in another. This allowed me to loop over each array and apply the images to the given divs index and also apply a data-id of ‘block’ to each obstacle. I found the data-ids really useful when it came to limiting the characters movement on the board. Both Harry and the Voldemorts would always test one div ahead of their position when they were moving. If a div contained a ‘block’ data-id the character would be prevented from moving any further.</p>
 
+<p>The code snippet below is creating the grid and game board.</p>
+
+# ![](images/md/creating_board.png) 
+
 <h3>Functionality</h3>
 
 <h4>Player Movement</h4>
 <p>Next I implemented Harrys movement. Here I used a switch statement that checked what arrow key had been pressed using keyboard event keycodes. Once the keycode was determined the correct movement was returned by the switch statement. At this point I found that Harry would need to be rotated to give more realistic vertical movement and flipped to give a more realistic horizontal movement. For the vertical movement I used a series of CSS classes with different degrees of rotation and for the horizontal movement I flipped the original Harry gif in photoshop and applied it to a new CSS class. </p>
 
+<p>The code snippet below is used to move harry around the board</p>
+
+# ![](images/md/moving-harry.png) 
+
+
 <h4>Voldemort Ghost Movement</h4>
 <p>The next step was getting the Voldemort ghosts to move. The ghosts needed to move randomly but also track Harry’s movement. For the random movement I made an array of movements and created a function that would randomly pick a movement. From there I used an if statement that would apply the movement that corresponded to the randomly selected movement.</p>
 <p>For the tracking movement I compared Harry’s position to the Voldemort’s position on the board and then used a series of if statements to move the ghosts closer to Harry.</p>
 
-<code>
-  	const voldemortMovements = ['left', 'right', 'up', 'down']
 
-  	function randomiseVoldemortMovements(){
-    return voldemortMovements[Math.floor(Math.random() * voldemortMovements.length)]
-  	}
+<p>The code snippet below is randomising the Voldemort ghost movements</p>
 
-	 if (randomiseVoldemortMovements() === 'left'){
-        //*Move Left
-        if (cells[voldemorts[index].position - 1].dataset.id !== 'block'){
-          voldemorts[index].position--
-        } 
-        //*Move Right
-      } else if (randomiseVoldemortMovements() === 'right'){
-        if (cells[voldemorts[index].position + 1].dataset.id !== 'block'){
-          voldemorts[index].position++
-        }
-        //*Move Up
-      } else if (randomiseVoldemortMovements() === 'up'){
-        if (cells[voldemorts[index].position - width].dataset.id !== 'block'){
-          voldemorts[index].position -= width
-        }//*Move Down
-      } else if (randomiseVoldemortMovements() === 'down'){
-        if (cells[voldemorts[index].position + width].dataset.id !== 'block'){  
-          voldemorts[index].position += width
-        }
-      }
-</code>
+
+# ![](images/md/moving-ghost.png) 
 
 <h3>Game Logic</h3>
 <p>The first piece of game logic I began creating was a function that took a life from a player when the player came into contact with a ghost and moved Harry back to his initial starting point on the board. From there I moved onto creating a function that dealt with the player losing all three lives, displaying an error message and ending the game. At this point I created an ‘end of game’ function that could be easily updated to handle a winning game or a losing game when the logic can been created.</p>
+
+<p>The code snippet below is contains the functions that deal with Harry losing a life, a winning game outcome and a losing game outcome.</p>
+
+# ![](images/md/losing-lives.png) 
 
 <p>The next stage in my process was creating a function that dealt with harry eating tokens and adding each eaten token to the players score. Once this was working I created a function that to display a winning message when all the tokens on the board were eaten and incorporated this into the ‘end of game function’.</p>
 
@@ -112,7 +104,10 @@
 <p>The game had a lot of moving pieces that needed to work in sync. I found this to be particularly true with the logic that was used to move the ghosts. Because I had one piece of logic that would randomly moved the ghosts at all times and another to track Harry, I found that the random movement logic at times would interfere with the tracking logic.</p>
 
 <h2>Wins</h2>
-<p>I feel that the biggest win for me wasn’t one single piece of code but being able to have multiple functions carrying out different tasks but at the same time working cohesively as one program. Building the game really taught me the importance of having a good plan, forming a clear direction and testing each piece of code as you write it. This whole process has really solidified my vanilla JavaScript skills.</p>
+<p>I feel that the biggest win for me wasn’t one single piece of code but being able to have multiple functions carrying out different tasks but at the same time working cohesively as one program.</p>
+
+<h2>Learnings</h2>
+<p>Building the game really taught me the importance of having a good plan, forming a clear direction and testing each piece of code as you write it. This whole process has really solidified my vanilla JavaScript skills.</p>
 
 
 <h2>Future Features</h2>
