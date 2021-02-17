@@ -29,7 +29,7 @@ You can find a live version of the app here: [Harry Paccer](https://timjframe.gi
 <h3>Game Instructions</h3>
 
 <ol>
-<li> When a player first arrives on the page they are greeted by an animated gif with a play game button to enter the game</li>
+<li> When a player first arrives on the page they are greeted by an animated gif with a play game button to enter the game.</li>
 
 
 # ![](images/characters/landing-page.gif)
@@ -43,11 +43,11 @@ You can find a live version of the app here: [Harry Paccer](https://timjframe.gi
 
 # ![](images/md/game-start.jpg) 
 
-<li>From here the player needs to collect all the tokens on the board. If a player collects a green token the voldemort ghosts will begin to flash. When a ghost is flashing Harry won't lose any lives if he comes into contact with a ghost and is able to eat they ghost. This will send the eaten ghost back to its starting position. Also while a ghost is flashing its tracking function is disabled and they will only move in random movements.</li>
+<li>From here the player needs to collect all the tokens on the board. If a player collects a green token the voldemort ghosts will begin to flash. When a ghost is flashing Harry won't lose any lives if he comes into contact with a ghost and is able to eat the ghost. This will send the eaten ghost back to its starting position. Also while a ghost is flashing its tracking function is disabled and they will only move in random movements.</li>
 
 # ![](images/md/eaten-green-token.jpg) 
 
-<li>If a player collects all the tokens thet are shown the wining message and once the player clicks on the 'ok' button they are taken back to the animated gif on the landing page.</li>
+<li>If a player collects all the tokens thet are shown the winning message and once the player clicks on the 'ok' button they are taken back to the animated gif on the landing page.</li>
 
 # ![](images/md/player-wins.png) 
 
@@ -72,7 +72,7 @@ You can find a live version of the app here: [Harry Paccer](https://timjframe.gi
 <h4>Player Movement</h4>
 <p>Next I implemented Harrys movement. Here I used a switch statement that checked what arrow key had been pressed using keyboard event keycodes. Once the keycode was determined the correct movement was returned by the switch statement. At this point I found that Harry would need to be rotated to give more realistic vertical movement and flipped to give a more realistic horizontal movement. For the vertical movement I used a series of CSS classes with different degrees of rotation and for the horizontal movement I flipped the original Harry gif in photoshop and applied it to a new CSS class. </p>
 
-<p>The code snippet below is used to move harry around the board</p>
+<p>The code snippet below is used to move harry around the board.</p>
 
 # ![](images/md/moving-harry.png) 
 
@@ -82,7 +82,7 @@ You can find a live version of the app here: [Harry Paccer](https://timjframe.gi
 <p>For the tracking movement I compared Harry’s position to the Voldemort’s position on the board and then used a series of if statements to move the ghosts closer to Harry.</p>
 
 
-<p>The code snippet below is randomising the Voldemort ghost movements</p>
+<p>The code snippet below is randomising the Voldemort ghost movements.</p>
 
 
 # ![](images/md/moving-ghost.png) 
@@ -113,10 +113,10 @@ You can find a live version of the app here: [Harry Paccer](https://timjframe.gi
 <h2>Future Features</h2>
 <p>If I had more time, I would like to:</p>
 <ul>
-<li>Make the game mobile responsive and controllable on a touch screen</li>
-<li>Make the ghost tracking logic more robust</li>
-<li>Give the player options to be different characters</li>
-<li>Add another level</li>
+<li>Make the game mobile responsive and controllable on a touch screen.</li>
+<li>Make the ghost tracking logic more robust.</li>
+<li>Give the player options to be different characters.</li>
+<li>Add another level.</li>
 </ul>
 
 
