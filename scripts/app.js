@@ -232,7 +232,6 @@ function init (){
   function handleKeyUp(e){
     if (isGameStarted === 'yes'){
       
-
       removeHarry()
       removeFlipHarry()
       removeRotateHarryUp()

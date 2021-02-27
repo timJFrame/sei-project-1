@@ -65,7 +65,118 @@ You can find a live version of the app here: [Harry Paccer](https://timjframe.gi
 
 <p>The code snippet below is creating the grid and game board.</p>
 
-# ![](images/md/creating_board.png) 
+
+```
+//*Board Functions
+	
+  //*Creates grid for game
+  function createGameGrid(){
+    for (let i = 0; i < gridCellCount; i++){
+      const cell = document.createElement('div')
+      // cell.innerHTML = i
+      grid.appendChild(cell)
+      cells.push(cell)
+    }
+  }
+
+  //*Running function to create grid
+  createGameGrid()
+
+ 
+
+  //*Creates border for game
+  function createGameBorder(){
+    for (let i = 1; i < 13; i++){
+      cells[i].classList.add('top-border')
+      cells[i].setAttribute('data-id', 'block')
+    }
+	
+    for (let i = 183; i < 195; i++){
+      cells[i].classList.add('bottom-border')
+      cells[i].setAttribute('data-id', 'block')
+    }
+
+    for (let i = 14; i < 182; i += 14){
+      cells[i].classList.add('left-side-border')
+      cells[i].setAttribute('data-id', 'block')
+    }
+
+    for (let i = 27; i < 195; i += 14){
+      cells[i].classList.add('right-side-border')
+      cells[i].setAttribute('data-id', 'block')
+    }
+
+    cells[0].classList.add('top-left-corner-border')
+    cells[0].setAttribute('data-id', 'block')
+    cells[13].classList.add('top-right-corner-border')
+    cells[13].setAttribute('data-id', 'block')
+    cells[182].classList.add('bottom-left-corner-border')
+    cells[182].setAttribute('data-id', 'block')
+    cells[195].classList.add('bottom-right-corner-border')
+    cells[195].setAttribute('data-id', 'block')
+  }
+
+  //*Running function to create border
+  createGameBorder()
+
+  //*Creates Blocks for Game
+  function createGameBlocks(){
+    //*Builds bottom left corner blocks
+    const bottomLeftCornerBlockArray = [58, 65, 62, 89, 100, 108, 156, 163, 160]
+    bottomLeftCornerBlockArray.forEach(item =>{
+      cells[item].classList.add('block-bottom-left-corner')
+      cells[item].setAttribute('data-id', 'block')
+    })
+    //*Builds bottom right corner blocks
+    const rightBottomCornerArray = [60, 67, 63, 92, 109, 158, 165, 161, 101]
+    rightBottomCornerArray.forEach(item => {
+      cells[item].classList.add('block-bottom-right-corner')
+      cells[item].setAttribute('data-id', 'block')
+    })
+
+    //*Builds top left corner blocks
+    const topLeftCornerArray = [30, 37, 34, 86, 94, 128, 135, 118, 75 ]
+    topLeftCornerArray.forEach(item => {
+      cells[item].classList.add('block-top-left-corner')
+      cells[item].setAttribute('data-id', 'block')
+    })
+
+    //*Builds top right corner blocks
+    const topRightCornerArray = [32, 39, 35, 78, 87, 130, 137, 119, 95]
+    topRightCornerArray.forEach(item => {
+      cells[item].classList.add('block-top-right-corner')
+      cells[item].setAttribute('data-id', 'block')
+    })
+
+    //* Builds top blocks
+    const topBlockArray = [31, 38, 129, 136]
+    topBlockArray.forEach(item => {
+      cells[item].classList.add('block-top-side')
+      cells[item].setAttribute('data-id', 'block')
+    })
+
+    //*Builds bottom blocks
+    const bottomBlockArray = [59, 66, 157, 164]
+    bottomBlockArray.forEach(item =>{
+      cells[item].classList.add('block-bottom-side')
+      cells[item].setAttribute('data-id', 'block')
+    })
+
+    //*Build right blocks
+    const rightBlockArray = [46, 53, 49, 144, 151, 133, 147]
+    rightBlockArray.forEach(item =>{
+      cells[item].classList.add('block-right-side')
+      cells[item].setAttribute('data-id', 'block')
+    })
+
+    //*Builds left blocks
+    const leftBlockArray = [44, 48, 51, 132, 142, 146, 149]
+    leftBlockArray.forEach(item => {
+      cells[item].classList.add('block-left-side')
+      cells[item].setAttribute('data-id', 'block')
+    })
+  }
+```
 
 <h3>Functionality</h3>
 
@@ -74,7 +185,62 @@ You can find a live version of the app here: [Harry Paccer](https://timjframe.gi
 
 <p>The code snippet below is used to move harry around the board.</p>
 
-# ![](images/md/moving-harry.png) 
+```
+function handleKeyUp(e){
+    if (isGameStarted === 'yes'){
+      
+      removeHarry()
+      removeFlipHarry()
+      removeRotateHarryUp()
+      removeRotateHarryDown()
+    
+      const horizontalPosition = harryPosition % width
+      const verticalPosition = Math.floor(harryPosition / width)
+
+		
+      switch (e.keyCode){
+        case 39: //*Move Right
+          if (horizontalPosition < width - 1 && cells[harryPosition + 1].dataset.id !== 'block') 
+            harryPosition++
+          flipHarry()
+          harryLosesLife()
+          harryEatsFood()
+          harryEatsSpecialFood()
+          
+          break
+        case 37://*Move Left
+          if (horizontalPosition > 0 && cells[harryPosition - 1].dataset.id !== 'block') 
+            harryPosition--
+          addHarry()
+          harryLosesLife()
+          harryEatsFood()
+          harryEatsSpecialFood()
+          
+          break
+        case 38://*Move Up
+          if (verticalPosition > 0 && cells[harryPosition - width].dataset.id !== 'block')
+            harryPosition -= width
+          rotateHarryUp()
+          harryLosesLife()
+          harryEatsFood()
+          harryEatsSpecialFood()
+          
+          break
+        case 40://*Move down
+          if (verticalPosition < width - 1 && cells[harryPosition + width].dataset.id !== 'block') 
+            harryPosition += width
+          rotateHarryDown()
+          harryLosesLife()
+          harryEatsFood()
+          harryEatsSpecialFood()
+          
+          break
+        default:
+          console.log('invaild key')
+     
+      } 
+```
+
 
 
 <h4>Voldemort Ghost Movement</h4>
@@ -85,15 +251,86 @@ You can find a live version of the app here: [Harry Paccer](https://timjframe.gi
 <p>The code snippet below is randomising the Voldemort ghost movements.</p>
 
 
-# ![](images/md/moving-ghost.png) 
+```
+//*Array used in if statement to move voldemort ghosts
+  const voldemortMovements = ['left', 'right', 'up', 'down']
+
+  //*Returns a random movement
+  function randomiseVoldemortMovements(){
+    return voldemortMovements[Math.floor(Math.random() * voldemortMovements.length)]
+  }
+
+  //*moveVoldemort controls the random movement of the voldemort ghosts using setInterval timer
+  function moveVoldemort(index, timer){
+    
+    if (timer){
+      return
+    }
+   
+    //*Tests if harry has eaten green food if so sets class to special ghost
+    timer = setInterval(() => {
+      if (didHarryEatSpecialFood === 'yes'){
+        removeSpecialVoldemorts(index)
+        removeVoldemorts(index)
+      } else if (didHarryEatSpecialFood === 'no') {
+        removeSpecialVoldemorts(index)
+        removeVoldemorts(index)
+      }
+     
+      
+      if (randomiseVoldemortMovements() === 'left'){
+        //*Move Left
+        if (cells[voldemorts[index].position - 1].dataset.id !== 'block'){
+          voldemorts[index].position--
+        } 
+        //*Move Right
+      } else if (randomiseVoldemortMovements() === 'right'){
+        if (cells[voldemorts[index].position + 1].dataset.id !== 'block'){
+          voldemorts[index].position++
+        }
+        //*Move Up
+      } else if (randomiseVoldemortMovements() === 'up'){
+        if (cells[voldemorts[index].position - width].dataset.id !== 'block'){
+          voldemorts[index].position -= width
+        }//*Move Down
+      } else if (randomiseVoldemortMovements() === 'down'){
+        if (cells[voldemorts[index].position + width].dataset.id !== 'block'){  
+          voldemorts[index].position += width
+        }
+      }
+```
 
 <h3>Game Logic</h3>
 <p>The first piece of game logic I began creating was a function that took a life from a player when the player came into contact with a ghost and moved Harry back to his initial starting point on the board. From there I moved onto creating a function that dealt with the player losing all three lives, displaying an error message and ending the game. At this point I created an ‘end of game’ function that could be easily updated to handle a winning game or a losing game when the logic can been created.</p>
 
 <p>The code snippet below is contains the functions that deal with Harry losing a life, a winning game outcome and a losing game outcome.</p>
 
-# ![](images/md/losing-lives.png) 
-
+```
+//*Moves harry back to original starting position and removes one life when Harry intersects with Voldemort
+  function harryLosesLife(){
+    
+    if (cells[harryPosition].className.includes('voldemort')){
+      
+      for (let i = 0; i < cells.length; i++){
+        cells[i].classList.remove('harry')
+        cells[i].classList.remove('flip-harry')
+        cells[i].classList.remove('rotate-harry-up')
+        cells[i].classList.remove('rotate-harry-down')
+      }
+      harryLives -= 1
+      harryPosition = 180
+      addHarry()
+      if (harryLives === 2){
+        life1.style.display = 'none'
+      } else if (harryLives === 1){
+        life2.style.display = 'none'
+      } else if (harryLives === 0){
+        life3.style.display = 'none'
+        playerLost()
+      }
+    }
+  }
+```
 <p>The next stage in my process was creating a function that dealt with harry eating tokens and adding each eaten token to the players score. Once this was working I created a function that to display a winning message when all the tokens on the board were eaten and incorporated this into the ‘end of game function’.</p>
 
 <p>The last important piece of functionality was a function to be used when Harry ate a green token. When this happened all of the Voldemort ghosts had a new CSS class applied for a short period of time. While the special class was applied the ghosts tracking logic was disabled and Harry would not lose any lives if he came into contact with a ghost and was also able to eat a ghost and send it back to its starting position.</p>
